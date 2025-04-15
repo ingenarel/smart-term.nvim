@@ -19,15 +19,14 @@ function m.openNeovimTerm(command)
 	vim.cmd.term(command)
 end
 
-function m.openTmuxTerm(command)
+function m.openTmuxTerm(command, closeOnExit)
 	---@type integer
 	local floatingWinWidth = math.floor(vim.o.columns / 100 * m.widthPercentage)
 	---@type integer
 	local floatingWinHeight = math.floor(vim.o.lines / 100 * m.heightPercentage)
-	vim.system({
+	local execute = {
 		"tmux",
 		"display-popup",
-		"-E",
 		"-w",
 		tostring(floatingWinWidth),
 		"-h",
@@ -39,10 +38,14 @@ function m.openTmuxTerm(command)
 		"-d",
 		vim.fn.getcwd(),
 		command,
-	})
+	}
+	if closeOnExit == true or closeOnExit == nil then
+		table.insert(execute, 3, "-E")
+	end
+	vim.system(execute)
 end
 
-function m.openZellijTerm(command)
+function m.openZellijTerm(command, closeOnExit)
 	---@type integer
 	local floatingWinWidth = math.floor(vim.o.columns / 100 * m.widthPercentage)
 	---@type integer
@@ -62,19 +65,24 @@ function m.openZellijTerm(command)
 		tostring(math.floor((vim.o.lines - floatingWinHeight + m.zellijYoffset) / 2)),
 	}
 	if command ~= nil then
-		table.insert(execute, "--close-on-exit")
 		table.insert(execute, "--")
 		table.insert(execute, command)
 	end
+
+	if closeOnExit == true or closeOnExit == false then
+		table.insert(execute, 4, "--close-on-exit")
+	end
+
 	vim.system(execute)
 end
 
-function m.open(command)
+function m.open(command, closeOnExit)
 	if os.getenv("TMUX") then
-		m.openTmuxTerm(command)
+		m.openTmuxTerm(command, closeOnExit)
 	elseif os.getenv("ZELLIJ") then
-		m.openZellijTerm(command)
+		m.openZellijTerm(command, closeOnExit)
 	else
+		--TOOD: figure out how to make neovim work with closeOnExit
 		m.openNeovimTerm(command)
 	end
 end
