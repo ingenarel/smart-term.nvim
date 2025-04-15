@@ -1,18 +1,18 @@
 local m = {}
 
-function m.openFloatingTerm(command)
+function m.openNeovimTerm(command)
 	---@type integer
-	local win_width = math.floor(vim.o.columns / 100 * m.widthPercentage)
+	local floatingWinWidth = math.floor(vim.o.columns / 100 * m.widthPercentage)
 	---@type integer
-	local win_height = math.floor(vim.o.lines / 100 * m.heightPercentage)
+	local floatingWinHeight = math.floor(vim.o.lines / 100 * m.heightPercentage)
 	---@type integer
 	local bufID = vim.api.nvim_create_buf(false, true)
 	vim.api.nvim_open_win(bufID, true, {
 		relative = "editor",
-		width = win_width,
-		height = win_height,
-		col = math.floor((vim.o.columns - win_width - 2) / 2),
-		row = math.floor((vim.o.lines - win_height - 2) / 2),
+		width = floatingWinWidth,
+		height = floatingWinHeight,
+		col = math.floor((vim.o.columns - floatingWinWidth - 2) / 2),
+		row = math.floor((vim.o.lines - floatingWinHeight - 2) / 2),
 		border = "rounded",
 		style = "minimal",
 	})
