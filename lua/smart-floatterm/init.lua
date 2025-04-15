@@ -11,8 +11,8 @@ function m.openNeovimTerm(command)
 		relative = "editor",
 		width = floatingWinWidth,
 		height = floatingWinHeight,
-		col = math.floor((vim.o.columns - floatingWinWidth - 2) / 2),
-		row = math.floor((vim.o.lines - floatingWinHeight - 2) / 2),
+		col = math.floor((vim.o.columns - floatingWinWidth + m.neovimXoffset) / 2),
+		row = math.floor((vim.o.lines - floatingWinHeight + m.neovimYoffset) / 2),
 		border = "rounded",
 		style = "minimal",
 	})
@@ -83,12 +83,23 @@ function m.setup(opts)
 	m.heightPercentage = opts.heightPercentage
 	m.widthPercentage = opts.widthPercentage
 
+	m.neovimXoffset = opts.neovimXoffset
+	m.neovimYoffset = opts.neovimYoffset
+
 	if m.heightPercentage == nil then
 		m.heightPercentage = 70
 	end
 	if m.widthPercentage == nil then
 		m.widthPercentage = 80
 	end
+
+	if m.neovimXoffset == nil then
+		m.neovimXoffset = -2
+	end
+	if m.neovimYoffset == nil then
+		m.neovimYoffset = -2
+	end
+
 end
 
 return m
