@@ -88,45 +88,17 @@ function m.open(command, closeOnExit)
 end
 
 function m.setup(opts)
-	m.heightPercentage = opts.heightPercentage
-	m.widthPercentage = opts.widthPercentage
+	m.heightPercentage = opts.heightPercentage or 70
+	m.widthPercentage = opts.widthPercentage or 80
 
-	m.neovimXoffset = opts.neovimXoffset
-	m.neovimYoffset = opts.neovimYoffset
+	m.neovimXoffset = opts.neovimXoffset or -2
+	m.neovimYoffset = opts.neovimYoffset or -2
 
-	m.tmuxXoffset = opts.tmuxXoffset
-	m.tmuxYoffset = opts.tmuxYoffset
+	m.tmuxXoffset = opts.tmuxXoffset or -2
+	m.tmuxYoffset = opts.tmuxYoffset or -2
 
-	m.zellijXoffset = opts.zellijXoffset
-	m.zellijYoffset = opts.zellijYoffset
-
-	if m.heightPercentage == nil then
-		m.heightPercentage = 70
-	end
-	if m.widthPercentage == nil then
-		m.widthPercentage = 80
-	end
-
-	if m.neovimXoffset == nil then
-		m.neovimXoffset = -2
-	end
-	if m.neovimYoffset == nil then
-		m.neovimYoffset = -2
-	end
-
-	if m.tmuxXoffset == nil then
-		m.tmuxXoffset = -2
-	end
-	if m.tmuxYoffset == nil then
-		m.tmuxYoffset = -2
-	end
-
-	if m.zellijXoffset == nil then
-		m.zellijXoffset = -2
-	end
-	if m.zellijYoffset == nil then
-		m.zellijYoffset = 2
-	end
+	m.zellijXoffset = opts.zellijXoffset or -2
+	m.zellijYoffset = opts.zellijYoffset or 2
 end
 
 return m
