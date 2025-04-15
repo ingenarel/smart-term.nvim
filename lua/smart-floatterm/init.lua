@@ -33,9 +33,9 @@ function m.openTmuxTerm(command)
 		"-h",
 		tostring(floatingWinHeight),
 		"-x",
-		tostring(math.floor((vim.o.columns - floatingWinWidth - 2) / 2)),
+		tostring(math.floor((vim.o.columns - floatingWinWidth + m.tmuxXoffset) / 2)),
 		"-y",
-		tostring(math.floor((vim.o.lines + floatingWinHeight) / 2)),
+		tostring(math.floor((vim.o.lines + floatingWinHeight + m.tmuxYoffset) / 2)),
 		"-d",
 		vim.fn.getcwd(),
 		command,
@@ -86,6 +86,9 @@ function m.setup(opts)
 	m.neovimXoffset = opts.neovimXoffset
 	m.neovimYoffset = opts.neovimYoffset
 
+	m.tmuxXoffset = opts.tmuxXoffset
+	m.tmuxYoffset = opts.tmuxYoffset
+
 	if m.heightPercentage == nil then
 		m.heightPercentage = 70
 	end
@@ -98,6 +101,13 @@ function m.setup(opts)
 	end
 	if m.neovimYoffset == nil then
 		m.neovimYoffset = -2
+	end
+
+	if m.tmuxXoffset == nil then
+		m.tmuxXoffset = -2
+	end
+	if m.tmuxYoffset == nil then
+		m.tmuxYoffset = -2
 	end
 
 end
