@@ -69,7 +69,7 @@ function m.openZellijTerm(command, closeOnExit)
 		table.insert(execute, command)
 	end
 
-	if closeOnExit == true or closeOnExit == false then
+	if closeOnExit == true or closeOnExit == nil then
 		table.insert(execute, 4, "--close-on-exit")
 	end
 
