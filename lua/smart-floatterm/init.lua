@@ -57,9 +57,9 @@ function m.openZellijTerm(command)
 		"--height",
 		tostring(floatingWinHeight),
 		"-x",
-		tostring(math.floor((vim.o.columns - floatingWinWidth - 2) / 2)),
+		tostring(math.floor((vim.o.columns - floatingWinWidth + m.zellijXoffset) / 2)),
 		"-y",
-		tostring(math.floor((vim.o.lines - floatingWinHeight + 3) / 2)),
+		tostring(math.floor((vim.o.lines - floatingWinHeight + m.zellijYoffset) / 2)),
 	}
 	if command ~= nil then
 		table.insert(execute, "--close-on-exit")
@@ -89,6 +89,9 @@ function m.setup(opts)
 	m.tmuxXoffset = opts.tmuxXoffset
 	m.tmuxYoffset = opts.tmuxYoffset
 
+	m.zellijXoffset = opts.zellijXoffset
+	m.zellijYoffset = opts.zellijYoffset
+
 	if m.heightPercentage == nil then
 		m.heightPercentage = 70
 	end
@@ -110,6 +113,12 @@ function m.setup(opts)
 		m.tmuxYoffset = -2
 	end
 
+	if m.zellijXoffset == nil then
+		m.zellijXoffset = -2
+	end
+	if m.zellijYoffset == nil then
+		m.zellijYoffset = 2
+	end
 end
 
 return m
