@@ -19,6 +19,25 @@ function m.openNeovimTerm(command)
 	vim.cmd.term(command)
 end
 
+function m.openTmuxTerm(command)
+	---@type integer
+	local floatingWinWidth = math.floor(vim.o.columns / 100 * m.widthPercentage)
+	---@type integer
+	local floatingWinHeight = math.floor(vim.o.lines / 100 * m.heightPercentage)
+	vim.system({
+		"tmux",
+		"display-popup",
+		"-E",
+		"-w",
+		tostring(floatingWinWidth),
+		"-h",
+		tostring(floatingWinHeight),
+		"-d",
+		vim.fn.getcwd(),
+		command,
+	})
+end
+
 function m.setup(opts)
 	m.heightPercentage = opts.heightPercentage
 	m.widthPercentage = opts.widthPercentage
