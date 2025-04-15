@@ -65,13 +65,13 @@ function m.openZellijTerm(command)
 	vim.system(execute)
 end
 
-function m.open()
+function m.open(command)
 	if os.getenv("TMUX") then
-		m.openTmuxTerm()
+		m.openTmuxTerm(command)
 	elseif os.getenv("ZELLIJ") then
-		m.openZellijTerm()
+		m.openZellijTerm(command)
 	else
-		m.openNeovimTerm()
+		m.openNeovimTerm(command)
 	end
 end
 
