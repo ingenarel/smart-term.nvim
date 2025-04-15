@@ -38,6 +38,14 @@ function m.openTmuxTerm(command)
 	})
 end
 
+function m.open()
+	if os.getenv("TMUX") then
+		m.openTmuxTerm()
+	else
+		m.openNeovimTerm()
+	end
+end
+
 function m.setup(opts)
 	m.heightPercentage = opts.heightPercentage
 	m.widthPercentage = opts.widthPercentage
