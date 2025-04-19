@@ -36,6 +36,8 @@ function m.openTmuxTerm(command, closeOnExit)
 		tostring(math.floor((vim.o.lines + floatingWinHeight + m.tmuxYoffset) / 2)),
 		"-d",
 		vim.fn.getcwd(),
+		"-b",
+		"rounded",
 		command,
 	}
 	if closeOnExit == true or closeOnExit == nil then
