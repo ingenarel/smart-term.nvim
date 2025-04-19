@@ -1,6 +1,7 @@
 local m = {}
 
 function m.openNeovimTerm(opts)
+	opts = opts or {}
 	---@type integer
 	local floatingWinWidth = math.floor(vim.o.columns / 100 * m.widthPercentage)
 	---@type integer
@@ -19,6 +20,7 @@ function m.openNeovimTerm(opts)
 end
 
 function m.openTmuxTerm(opts)
+	opts = opts or {}
 	---@type integer
 	local floatingWinWidth = math.floor(vim.o.columns / 100 * m.widthPercentage)
 	---@type integer
@@ -47,6 +49,7 @@ function m.openTmuxTerm(opts)
 end
 
 function m.openZellijTerm(opts)
+	opts = opts or {}
 	---@type integer
 	local floatingWinWidth = math.floor(vim.o.columns / 100 * m.widthPercentage)
 	---@type integer
@@ -78,6 +81,7 @@ function m.openZellijTerm(opts)
 end
 
 function m.open(opts)
+	opts = opts or {}
 	if os.getenv("TMUX") then
 		m.openTmuxTerm({ command = opts.command, closeOnExit = opts.closeOnExit })
 	elseif os.getenv("ZELLIJ") then
