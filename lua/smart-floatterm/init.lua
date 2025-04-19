@@ -1,6 +1,6 @@
 local m = {}
 
-function m.openNeovimTerm(command)
+function m.openNeovimTerm(opts)
 	---@type integer
 	local floatingWinWidth = math.floor(vim.o.columns / 100 * m.widthPercentage)
 	---@type integer
@@ -15,10 +15,10 @@ function m.openNeovimTerm(command)
 		border = "rounded",
 		style = "minimal",
 	})
-	vim.cmd.term(command)
+	vim.cmd.term(opts.command)
 end
 
-function m.openTmuxTerm(command, closeOnExit)
+function m.openTmuxTerm(opts)
 	---@type integer
 	local floatingWinWidth = math.floor(vim.o.columns / 100 * m.widthPercentage)
 	---@type integer
@@ -38,15 +38,15 @@ function m.openTmuxTerm(command, closeOnExit)
 		vim.fn.getcwd(),
 		"-b",
 		"rounded",
-		command,
+		opts.command,
 	}
-	if closeOnExit == true or closeOnExit == nil then
+	if opts.closeOnExit == true or opts.closeOnExit == nil then
 		table.insert(execute, 3, "-E")
 	end
 	vim.system(execute)
 end
 
-function m.openZellijTerm(command, closeOnExit)
+function m.openZellijTerm(opts)
 	---@type integer
 	local floatingWinWidth = math.floor(vim.o.columns / 100 * m.widthPercentage)
 	---@type integer
@@ -65,26 +65,26 @@ function m.openZellijTerm(command, closeOnExit)
 		"-y",
 		tostring(math.floor((vim.o.lines - floatingWinHeight + m.zellijYoffset) / 2)),
 	}
-	if command ~= nil then
+	if opts.command ~= nil then
 		table.insert(execute, "--")
-		table.insert(execute, command)
+		table.insert(execute, opts.command)
 	end
 
-	if closeOnExit == true or closeOnExit == nil then
+	if opts.closeOnExit == true or opts.closeOnExit == nil then
 		table.insert(execute, 4, "--close-on-exit")
 	end
 
 	vim.system(execute)
 end
 
-function m.open(command, closeOnExit)
+function m.open(opts)
 	if os.getenv("TMUX") then
-		m.openTmuxTerm(command, closeOnExit)
+		m.openTmuxTerm({ command = opts.command, closeOnExit = opts.closeOnExit })
 	elseif os.getenv("ZELLIJ") then
-		m.openZellijTerm(command, closeOnExit)
+		m.openZellijTerm({ command = opts.command, closeOnExit = opts.closeOnExit })
 	else
-		--TOOD: figure out how to make neovim work with closeOnExit
-		m.openNeovimTerm(command)
+		--TOOD: figure out how to make neovim work with opts.closeOnExit
+		m.openNeovimTerm({ command = opts.command })
 	end
 end
 
