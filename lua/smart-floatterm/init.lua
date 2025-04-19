@@ -21,10 +21,17 @@ end
 
 function m.openTmuxTerm(opts)
 	opts = opts or {}
+
+	opts.heightPercentage = opts.heightPercentage or m.heightPercentage
+	opts.widthPercentage = opts.widthPercentage or m.widthPercentage
+
+	opts.xOffset = opts.xOffset or m.tmuxXoffset
+	opts.yOffset = opts.yOffset or m.tmuxYoffset
+
 	---@type integer
-	local floatingWinWidth = math.floor(vim.o.columns / 100 * m.widthPercentage)
+	local floatingWinWidth = math.floor(vim.o.columns / 100 * opts.widthPercentage)
 	---@type integer
-	local floatingWinHeight = math.floor(vim.o.lines / 100 * m.heightPercentage)
+	local floatingWinHeight = math.floor(vim.o.lines / 100 * opts.heightPercentage)
 	local execute = {
 		"tmux",
 		"display-popup",
@@ -33,9 +40,9 @@ function m.openTmuxTerm(opts)
 		"-h",
 		tostring(floatingWinHeight),
 		"-x",
-		tostring(math.floor((vim.o.columns - floatingWinWidth + m.tmuxXoffset) / 2)),
+		tostring(math.floor((vim.o.columns - floatingWinWidth + opts.xOffset) / 2)),
 		"-y",
-		tostring(math.floor((vim.o.lines + floatingWinHeight + m.tmuxYoffset) / 2)),
+		tostring(math.floor((vim.o.lines + floatingWinHeight + opts.yOffset) / 2)),
 		"-d",
 		vim.fn.getcwd(),
 		"-b",
@@ -83,7 +90,14 @@ end
 function m.open(opts)
 	opts = opts or {}
 	if os.getenv("TMUX") then
-		m.openTmuxTerm({ command = opts.command, closeOnExit = opts.closeOnExit })
+		m.openTmuxTerm({
+			command = opts.command,
+			closeOnExit = opts.closeOnExit,
+			heightPercentage = opts.heightPercentage,
+			widthPercentage = opts.widthPercentage,
+			xOffset = opts.xOffset,
+			yOffset = opts.yOffset,
+		})
 	elseif os.getenv("ZELLIJ") then
 		m.openZellijTerm({ command = opts.command, closeOnExit = opts.closeOnExit })
 	else
