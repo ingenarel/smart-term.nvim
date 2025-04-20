@@ -2,17 +2,24 @@ local m = {}
 
 function m.openNeovimTerm(opts)
     opts = opts or {}
+
+    opts.heightPercentage = opts.heightPercentage or m.heightPercentage
+    opts.widthPercentage = opts.widthPercentage or m.widthPercentage
+
+    opts.xOffset = opts.xOffset or m.tmuxXoffset
+    opts.yOffset = opts.yOffset or m.tmuxYoffset
+
     ---@type integer
-    local floatingWinWidth = math.floor(vim.o.columns / 100 * m.widthPercentage)
+    local floatingWinWidth = math.floor(vim.o.columns / 100 * opts.widthPercentage)
     ---@type integer
-    local floatingWinHeight = math.floor(vim.o.lines / 100 * m.heightPercentage)
-    ---@type integer
+    local floatingWinHeight = math.floor(vim.o.lines / 100 * opts.heightPercentage)
+
     vim.api.nvim_open_win(vim.api.nvim_create_buf(false, true), true, {
         relative = "editor",
         width = floatingWinWidth,
         height = floatingWinHeight,
-        col = math.floor((vim.o.columns - floatingWinWidth + m.neovimXoffset) / 2),
-        row = math.floor((vim.o.lines - floatingWinHeight + m.neovimYoffset) / 2),
+        col = math.floor((vim.o.columns - floatingWinWidth + opts.xoffset) / 2),
+        row = math.floor((vim.o.lines - floatingWinHeight + opts.yoffset) / 2),
         border = "rounded",
         style = "minimal",
     })
@@ -32,6 +39,7 @@ function m.openTmuxTerm(opts)
     local floatingWinWidth = math.floor(vim.o.columns / 100 * opts.widthPercentage)
     ---@type integer
     local floatingWinHeight = math.floor(vim.o.lines / 100 * opts.heightPercentage)
+
     local execute = {
         "tmux",
         "display-popup",
@@ -102,7 +110,13 @@ function m.open(opts)
         m.openZellijTerm { command = opts.command, closeOnExit = opts.closeOnExit }
     else
         --TOOD: figure out how to make neovim work with opts.closeOnExit
-        m.openNeovimTerm { command = opts.command }
+        m.openNeovimTerm {
+            command = opts.command,
+            heightPercentage = opts.heightPercentage,
+            widthPercentage = opts.widthPercentage,
+            xOffset = opts.xOffset,
+            yOffset = opts.yOffset,
+        }
     end
 end
 
