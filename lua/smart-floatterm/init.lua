@@ -6,8 +6,8 @@ function m.openNeovimTerm(opts)
     opts.heightPercentage = opts.heightPercentage or m.heightPercentage
     opts.widthPercentage = opts.widthPercentage or m.widthPercentage
 
-    opts.xOffset = opts.xOffset or m.tmuxXoffset
-    opts.yOffset = opts.yOffset or m.tmuxYoffset
+    opts.xOffset = opts.xOffset or m.neovimXoffset
+    opts.yOffset = opts.yOffset or m.neovimYoffset
 
     ---@type integer
     local floatingWinWidth = math.floor(vim.o.columns / 100 * opts.widthPercentage)
@@ -18,8 +18,8 @@ function m.openNeovimTerm(opts)
         relative = "editor",
         width = floatingWinWidth,
         height = floatingWinHeight,
-        col = math.floor((vim.o.columns - floatingWinWidth + opts.xoffset) / 2),
-        row = math.floor((vim.o.lines - floatingWinHeight + opts.yoffset) / 2),
+        col = math.floor((vim.o.columns - floatingWinWidth + opts.xOffset) / 2),
+        row = math.floor((vim.o.lines - floatingWinHeight + opts.yOffset) / 2),
         border = "rounded",
         style = "minimal",
     })
