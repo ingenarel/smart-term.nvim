@@ -17,7 +17,7 @@ function m.openNeovimTerm(opts)
         border = "rounded",
         style = "minimal",
     })
-    vim.cmd.term(opts.command)
+    vim.cmd.term(opts.command or opts[1])
 end
 
 function m.openTmuxTerm(opts)
@@ -43,7 +43,7 @@ function m.openTmuxTerm(opts)
         vim.fn.getcwd(),
         "-b",
         "rounded",
-        opts.command,
+        opts.command or opts[1],
     }
     if opts.closeOnExit == true or opts.closeOnExit == nil then
         table.insert(execute, 3, "-E")
@@ -73,9 +73,9 @@ function m.openZellijTerm(opts)
         tostring(math.floor((vim.o.lines - floatingWinHeight + (opts.yOffset or m.zellijYoffset)) / 2)),
     }
 
-    if opts.command ~= nil then
+    if opts.command ~= nil or opts[1] ~= nil then
         table.insert(execute, "--")
-        table.insert(execute, opts.command)
+        table.insert(execute, opts.command or opts[1])
     end
 
     if opts.closeOnExit == true or opts.closeOnExit == nil then
@@ -89,7 +89,7 @@ function m.open(opts)
     opts = opts or {}
     if os.getenv("TMUX") then
         m.openTmuxTerm {
-            command = opts.command,
+            command = opts.command or opts[1],
             closeOnExit = opts.closeOnExit,
             heightPercentage = opts.heightPercentage,
             widthPercentage = opts.widthPercentage,
@@ -98,7 +98,7 @@ function m.open(opts)
         }
     elseif os.getenv("ZELLIJ") then
         m.openZellijTerm {
-            command = opts.command,
+            command = opts.command or opts[1],
             closeOnExit = opts.closeOnExit,
             heightPercentage = opts.heightPercentage,
             widthPercentage = opts.widthPercentage,
@@ -108,7 +108,7 @@ function m.open(opts)
     else
         --TOOD: figure out how to make neovim work with opts.closeOnExit
         m.openNeovimTerm {
-            command = opts.command,
+            command = opts.command or opts[1],
             heightPercentage = opts.heightPercentage,
             widthPercentage = opts.widthPercentage,
             xOffset = opts.xOffset,
