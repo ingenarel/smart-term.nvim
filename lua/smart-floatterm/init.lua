@@ -109,6 +109,8 @@ function m.open(opts)
 end
 
 function m.setup(opts)
+    opts = opts or {}
+
     m.heightPercentage = opts.heightPercentage or 70
     m.widthPercentage = opts.widthPercentage or 80
 
