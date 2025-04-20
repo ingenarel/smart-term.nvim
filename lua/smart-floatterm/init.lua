@@ -3,23 +3,17 @@ local m = {}
 function m.openNeovimTerm(opts)
     opts = opts or {}
 
-    opts.heightPercentage = opts.heightPercentage or m.heightPercentage
-    opts.widthPercentage = opts.widthPercentage or m.widthPercentage
-
-    opts.xOffset = opts.xOffset or m.neovimXoffset
-    opts.yOffset = opts.yOffset or m.neovimYoffset
-
     ---@type integer
-    local floatingWinWidth = math.floor(vim.o.columns / 100 * opts.widthPercentage)
+    local floatingWinWidth = math.floor(vim.o.columns / 100 * (opts.widthPercentage or m.widthPercentage))
     ---@type integer
-    local floatingWinHeight = math.floor(vim.o.lines / 100 * opts.heightPercentage)
+    local floatingWinHeight = math.floor(vim.o.lines / 100 * (opts.heightPercentage or m.heightPercentage))
 
     vim.api.nvim_open_win(vim.api.nvim_create_buf(false, true), true, {
         relative = "editor",
         width = floatingWinWidth,
         height = floatingWinHeight,
-        col = math.floor((vim.o.columns - floatingWinWidth + opts.xOffset) / 2),
-        row = math.floor((vim.o.lines - floatingWinHeight + opts.yOffset) / 2),
+        col = math.floor((vim.o.columns - floatingWinWidth + (opts.xOffset or m.neovimXoffset)) / 2),
+        row = math.floor((vim.o.lines - floatingWinHeight + (opts.yOffset or m.neovimYoffset)) / 2),
         border = "rounded",
         style = "minimal",
     })
@@ -29,16 +23,10 @@ end
 function m.openTmuxTerm(opts)
     opts = opts or {}
 
-    opts.heightPercentage = opts.heightPercentage or m.heightPercentage
-    opts.widthPercentage = opts.widthPercentage or m.widthPercentage
-
-    opts.xOffset = opts.xOffset or m.tmuxXoffset
-    opts.yOffset = opts.yOffset or m.tmuxYoffset
-
     ---@type integer
-    local floatingWinWidth = math.floor(vim.o.columns / 100 * opts.widthPercentage)
+    local floatingWinWidth = math.floor(vim.o.columns / 100 * (opts.widthPercentage or m.widthPercentage))
     ---@type integer
-    local floatingWinHeight = math.floor(vim.o.lines / 100 * opts.heightPercentage)
+    local floatingWinHeight = math.floor(vim.o.lines / 100 * (opts.heightPercentage or m.heightPercentage))
 
     local execute = {
         "tmux",
@@ -48,9 +36,9 @@ function m.openTmuxTerm(opts)
         "-h",
         tostring(floatingWinHeight),
         "-x",
-        tostring(math.floor((vim.o.columns - floatingWinWidth + opts.xOffset) / 2)),
+        tostring(math.floor((vim.o.columns - floatingWinWidth + (opts.xOffset or m.tmuxXoffset)) / 2)),
         "-y",
-        tostring(math.floor((vim.o.lines + floatingWinHeight + opts.yOffset) / 2)),
+        tostring(math.floor((vim.o.lines + floatingWinHeight + (opts.yOffset or m.tmuxYoffset)) / 2)),
         "-d",
         vim.fn.getcwd(),
         "-b",
