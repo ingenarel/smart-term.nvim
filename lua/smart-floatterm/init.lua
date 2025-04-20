@@ -53,10 +53,11 @@ end
 
 function m.openZellijTerm(opts)
     opts = opts or {}
+
     ---@type integer
-    local floatingWinWidth = math.floor(vim.o.columns / 100 * m.widthPercentage)
+    local floatingWinWidth = math.floor(vim.o.columns / 100 * (opts.widthPercentage or m.widthPercentage))
     ---@type integer
-    local floatingWinHeight = math.floor(vim.o.lines / 100 * m.heightPercentage)
+    local floatingWinHeight = math.floor(vim.o.lines / 100 * (opts.heightPercentage or m.heightPercentage))
     local execute = {
         "zellij",
         "action",
@@ -67,10 +68,11 @@ function m.openZellijTerm(opts)
         "--height",
         tostring(floatingWinHeight),
         "-x",
-        tostring(math.floor((vim.o.columns - floatingWinWidth + m.zellijXoffset) / 2)),
+        tostring(math.floor((vim.o.columns - floatingWinWidth + (opts.xOffset or m.zellijXoffset)) / 2)),
         "-y",
-        tostring(math.floor((vim.o.lines - floatingWinHeight + m.zellijYoffset) / 2)),
+        tostring(math.floor((vim.o.lines - floatingWinHeight + (opts.yOffset or m.zellijYoffset)) / 2)),
     }
+
     if opts.command ~= nil then
         table.insert(execute, "--")
         table.insert(execute, opts.command)
@@ -95,7 +97,14 @@ function m.open(opts)
             yOffset = opts.yOffset,
         }
     elseif os.getenv("ZELLIJ") then
-        m.openZellijTerm { command = opts.command, closeOnExit = opts.closeOnExit }
+        m.openZellijTerm {
+            command = opts.command,
+            closeOnExit = opts.closeOnExit,
+            heightPercentage = opts.heightPercentage,
+            widthPercentage = opts.widthPercentage,
+            xOffset = opts.xOffset,
+            yOffset = opts.yOffset,
+        }
     else
         --TOOD: figure out how to make neovim work with opts.closeOnExit
         m.openNeovimTerm {
