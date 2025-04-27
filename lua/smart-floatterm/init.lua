@@ -1,7 +1,14 @@
 local m = {}
 
 function m.openNeovimTerm(opts)
-    opts = opts or {}
+    if type(opts) == "string" then
+        local x = {}
+        x[1] = opts
+        opts = x
+        x = nil
+    elseif type(opts) ~= "table" then
+        opts = {}
+    end
 
     ---@type integer
     local floatingWinWidth = math.floor(vim.o.columns / 100 * (opts.widthPercentage or m.widthPercentage))
@@ -21,7 +28,14 @@ function m.openNeovimTerm(opts)
 end
 
 function m.openTmuxTerm(opts)
-    opts = opts or {}
+    if type(opts) == "string" then
+        local x = {}
+        x[1] = opts
+        opts = x
+        x = nil
+    elseif type(opts) ~= "table" then
+        opts = {}
+    end
 
     ---@type integer
     local floatingWinWidth = math.floor(vim.o.columns / 100 * (opts.widthPercentage or m.widthPercentage))
@@ -52,7 +66,14 @@ function m.openTmuxTerm(opts)
 end
 
 function m.openZellijTerm(opts)
-    opts = opts or {}
+    if type(opts) == "string" then
+        local x = {}
+        x[1] = opts
+        opts = x
+        x = nil
+    elseif type(opts) ~= "table" then
+        opts = {}
+    end
 
     ---@type integer
     local floatingWinWidth = math.floor(vim.o.columns / 100 * (opts.widthPercentage or m.widthPercentage))
@@ -86,7 +107,15 @@ function m.openZellijTerm(opts)
 end
 
 function m.open(opts)
-    opts = opts or {}
+    if type(opts) == "string" then
+        local x = {}
+        x[1] = opts
+        opts = x
+        x = nil
+    elseif type(opts) ~= "table" then
+        opts = {}
+    end
+
     if os.getenv("TMUX") then
         m.openTmuxTerm {
             command = opts.command or opts[1],
