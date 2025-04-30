@@ -80,6 +80,12 @@ function m.openZellijTerm(opts)
         opts = {}
     end
 
+    opts.command = opts.command or opts[1]
+
+    if opts.command == nil then
+        opts.command = os.getenv("SHELL")
+    end
+
     ---@type integer
     local floatingWinWidth = math.floor(vim.o.columns / 100 * (opts.widthPercentage or m.widthPercentage))
     ---@type integer
@@ -99,10 +105,8 @@ function m.openZellijTerm(opts)
         tostring(math.floor((vim.o.lines - floatingWinHeight + (opts.yOffset or m.zellijYoffset)) / 2)),
     }
 
-    if opts.command ~= nil or opts[1] ~= nil then
-        table.insert(execute, "--")
-        table.insert(execute, opts.command or opts[1])
-    end
+    table.insert(execute, "--")
+    table.insert(execute, opts.command)
 
     if opts.closeOnExit or opts.closeOnExit == nil then
         table.insert(execute, 4, "--close-on-exit")
