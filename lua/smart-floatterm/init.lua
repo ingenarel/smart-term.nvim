@@ -116,9 +116,11 @@ function m.open(opts)
         opts = {}
     end
 
+    opts.command = opts.command or opts[1]
+
     if os.getenv("TMUX") then
         m.openTmuxTerm {
-            command = opts.command or opts[1],
+            command = opts.command,
             closeOnExit = opts.closeOnExit,
             heightPercentage = opts.heightPercentage,
             widthPercentage = opts.widthPercentage,
@@ -127,7 +129,7 @@ function m.open(opts)
         }
     elseif os.getenv("ZELLIJ") then
         m.openZellijTerm {
-            command = opts.command or opts[1],
+            command = opts.command,
             closeOnExit = opts.closeOnExit,
             heightPercentage = opts.heightPercentage,
             widthPercentage = opts.widthPercentage,
@@ -137,7 +139,7 @@ function m.open(opts)
     else
         --TOOD: figure out how to make neovim work with opts.closeOnExit
         m.openNeovimTerm {
-            command = opts.command or opts[1],
+            command = opts.command,
             heightPercentage = opts.heightPercentage,
             widthPercentage = opts.widthPercentage,
             xOffset = opts.xOffset,
