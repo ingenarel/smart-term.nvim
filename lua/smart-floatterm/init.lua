@@ -127,6 +127,10 @@ function m.open(opts)
 
     opts.command = opts.command or opts[1]
 
+    if opts.command == "lazygit" then
+        vim.cmd("w")
+    end
+
     if os.getenv("TMUX") then
         m.openTmuxTerm {
             command = opts.command,
