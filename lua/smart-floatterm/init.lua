@@ -59,7 +59,7 @@ function m.openTmuxTerm(opts)
         "rounded",
         opts.command or opts[1],
     }
-    if opts.closeOnExit == true or opts.closeOnExit == nil then
+    if opts.closeOnExit or opts.closeOnExit == nil then
         table.insert(execute, 3, "-E")
     end
     vim.system(execute)
@@ -99,7 +99,7 @@ function m.openZellijTerm(opts)
         table.insert(execute, opts.command or opts[1])
     end
 
-    if opts.closeOnExit == true or opts.closeOnExit == nil then
+    if opts.closeOnExit or opts.closeOnExit == nil then
         table.insert(execute, 4, "--close-on-exit")
     end
 
