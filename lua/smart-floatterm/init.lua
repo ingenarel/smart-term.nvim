@@ -62,7 +62,12 @@ function m.openTmuxTerm(opts)
     if opts.closeOnExit or opts.closeOnExit == nil then
         table.insert(execute, 3, "-E")
     end
-    vim.system(execute)
+
+    if opts.stopVim then
+        vim.system(execute):wait()
+    else
+        vim.system(execute)
+    end
 end
 
 function m.openZellijTerm(opts)
@@ -103,7 +108,11 @@ function m.openZellijTerm(opts)
         table.insert(execute, 4, "--close-on-exit")
     end
 
-    vim.system(execute)
+    if opts.stopVim then
+        vim.system(execute):wait()
+    else
+        vim.system(execute)
+    end
 end
 
 function m.open(opts)
@@ -126,6 +135,7 @@ function m.open(opts)
             widthPercentage = opts.widthPercentage,
             xOffset = opts.xOffset,
             yOffset = opts.yOffset,
+            stopVim = opts.stopVim,
         }
     elseif os.getenv("ZELLIJ") then
         m.openZellijTerm {
@@ -135,6 +145,7 @@ function m.open(opts)
             widthPercentage = opts.widthPercentage,
             xOffset = opts.xOffset,
             yOffset = opts.yOffset,
+            stopVim = opts.stopVim,
         }
     else
         --TOOD: figure out how to make neovim work with opts.closeOnExit
