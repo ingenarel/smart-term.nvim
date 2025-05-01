@@ -105,12 +105,12 @@ function m.openZellijTerm(opts)
         tostring(math.floor((vim.o.lines - floatingWinHeight + (opts.yOffset or m.zellijYoffset)) / 2)),
     }
 
-    table.insert(execute, "--")
-    table.insert(execute, opts.command)
-
     if opts.closeOnExit or opts.closeOnExit == nil then
         table.insert(execute, 4, "--close-on-exit")
     end
+
+    table.insert(execute, "--")
+    table.insert(execute, opts.command)
 
     if opts.stopVim then
         vim.system(execute):wait()
