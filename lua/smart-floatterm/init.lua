@@ -27,6 +27,11 @@ function m.openNeovimTerm(opts)
 
     vim.fn.jobstart(opts.command or opts[1] or os.getenv("SHELL"), {
         term = true,
+        on_exit = function()
+            if opts.closeOnExit or opts.closeOnExit == nil then
+                vim.cmd("q")
+            end
+        end,
     })
     vim.cmd.startinsert()
 end
@@ -160,13 +165,13 @@ function m.open(opts)
             stopVim = opts.stopVim,
         }
     else
-        --TOOD: figure out how to make neovim work with opts.closeOnExit
         m.openNeovimTerm {
             command = opts.command,
             heightPercentage = opts.heightPercentage,
             widthPercentage = opts.widthPercentage,
             xOffset = opts.xOffset,
             yOffset = opts.yOffset,
+            closeOnExit = opts.closeOnExit,
         }
     end
 end
