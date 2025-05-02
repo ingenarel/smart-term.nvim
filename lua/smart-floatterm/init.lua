@@ -25,6 +25,7 @@ function m.openNeovimTerm(opts)
         style = "minimal",
     })
     vim.cmd.term(opts.command or opts[1])
+    vim.cmd.startinsert()
 end
 
 function m.openTmuxTerm(opts)
