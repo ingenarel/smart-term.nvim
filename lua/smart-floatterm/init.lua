@@ -24,7 +24,10 @@ function m.openNeovimTerm(opts)
         border = "rounded",
         style = "minimal",
     })
-    vim.cmd.term(opts.command or opts[1])
+
+    vim.fn.jobstart(opts.command or opts[1] or os.getenv("SHELL"), {
+        term = true,
+    })
     vim.cmd.startinsert()
 end
 
