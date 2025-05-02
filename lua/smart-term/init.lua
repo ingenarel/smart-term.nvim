@@ -206,8 +206,8 @@ function m.openNeovimSpliTerm(opts) -- {{{
     vim.api.nvim_open_win(vim.api.nvim_create_buf(false, true), true, {
         -- width = floatingWinWidth,
         height = opts.height,
-        split = opts.side,
         width = opts.width,
+        split = opts.side or "below",
         style = "minimal",
     })
 
