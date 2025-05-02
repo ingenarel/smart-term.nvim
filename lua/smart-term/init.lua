@@ -222,6 +222,48 @@ function m.openNeovimSpliTerm(opts) -- {{{
     vim.cmd.startinsert()
 end -- }}}
 
+function m.openTmuxSpliTerm(opts) -- {{{
+    if type(opts) == "string" then
+        local x = {}
+        x[1] = opts
+        opts = x
+        x = nil
+    elseif type(opts) ~= "table" then
+        opts = {}
+    end
+
+    opts.command = m.commandExtraCommands(opts.command or opts[1])
+
+    local execute = {
+        "tmux",
+    }
+
+    table.insert(execute, "split-window")
+
+    if opts.side == "below" or opts.side == nil then
+        table.insert(execute, "-v")
+    elseif opts.side == "right" then
+        table.insert(execute, "-h")
+    elseif opts.side == "above" then
+        table.insert(execute, "-v")
+        table.insert(execute, "-b")
+    elseif opts.side == "left" then
+        table.insert(execute, "-h")
+        table.insert(execute, "-b")
+    end
+
+    table.insert(execute, "-l")
+    table.insert(execute, opts.size or 15)
+
+    table.insert(execute, opts.command)
+
+    if opts.stopVim then
+        vim.system(execute):wait()
+    else
+        vim.system(execute)
+    end
+end -- }}}
+
 function m.setup(opts) -- {{{
     opts = opts or {}
 
