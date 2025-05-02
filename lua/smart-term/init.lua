@@ -204,12 +204,11 @@ function m.openNeovimSpliTerm(opts) -- {{{
     opts.command = m.commandExtraCommands(opts.command or opts[1])
 
     vim.api.nvim_open_win(vim.api.nvim_create_buf(false, true), true, {
-        -- width = floatingWinWidth,
-        height = opts.height,
-        width = opts.width,
         split = opts.side or "below",
         style = "minimal",
     })
+
+    vim.cmd.resize(opts.size or 15)
 
     vim.fn.jobstart(opts.command, {
         term = true,
