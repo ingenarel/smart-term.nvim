@@ -8,11 +8,9 @@ function m.commandExtraCommands(command) -- {{{
     local commands = {
         lazygit = function()
             vim.cmd("w")
-            print("lazygit: " .. command)
             return command
         end,
         default = function()
-            print("default: " .. command)
             return command
         end,
     }
@@ -22,7 +20,6 @@ function m.commandExtraCommands(command) -- {{{
 end -- }}}
 
 function m.openNeovimFloaTerm(opts) -- {{{
-    -- vim.print(opts)
     if type(opts) == "string" then
         local x = {}
         x[1] = opts
@@ -31,13 +28,8 @@ function m.openNeovimFloaTerm(opts) -- {{{
     elseif type(opts) ~= "table" then
         opts = {}
     end
-    -- vim.print(opts)
-
-    -- print(opts.command)
 
     opts.command = m.commandExtraCommands(opts.command or opts[1])
-
-    -- print(opts.command)
 
     ---@type integer
     local floatingWinWidth = math.floor(vim.o.columns / 100 * (opts.widthPercentage or m.widthPercentage))
@@ -208,9 +200,6 @@ function m.openNeovimSpliTerm(opts) -- {{{
     elseif type(opts) ~= "table" then
         opts = {}
     end
-    -- vim.print(opts)
-
-    -- print(opts.command)
 
     opts.command = m.commandExtraCommands(opts.command or opts[1])
 
