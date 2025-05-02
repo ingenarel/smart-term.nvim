@@ -199,7 +199,7 @@ function m.openFloaTerm(opts) -- {{{
     end
 end -- }}}
 
-function m.openNeovimSpliTerm(opts)
+function m.openNeovimSpliTerm(opts) -- {{{
     if type(opts) == "string" then
         local x = {}
         x[1] = opts
@@ -231,7 +231,7 @@ function m.openNeovimSpliTerm(opts)
         end,
     })
     vim.cmd.startinsert()
-end
+end -- }}}
 
 function m.setup(opts) -- {{{
     opts = opts or {}
