@@ -21,7 +21,7 @@ function m.commandExtraCommands(command) -- {{{
     return fn()
 end -- }}}
 
-function m.openNeovimTerm(opts) -- {{{
+function m.openNeovimFloaTerm(opts) -- {{{
     -- vim.print(opts)
     if type(opts) == "string" then
         local x = {}
@@ -65,7 +65,7 @@ function m.openNeovimTerm(opts) -- {{{
     vim.cmd.startinsert()
 end -- }}}
 
-function m.openTmuxTerm(opts) -- {{{
+function m.openTmuxFloaTerm(opts) -- {{{
     if type(opts) == "string" then
         local x = {}
         x[1] = opts
@@ -110,7 +110,7 @@ function m.openTmuxTerm(opts) -- {{{
     end
 end -- }}}
 
-function m.openZellijTerm(opts) -- {{{
+function m.openZellijFloaTerm(opts) -- {{{
     if type(opts) == "string" then
         local x = {}
         x[1] = opts
@@ -155,7 +155,7 @@ function m.openZellijTerm(opts) -- {{{
     end
 end -- }}}
 
-function m.open(opts) -- {{{
+function m.openFloaTerm(opts) -- {{{
     if type(opts) == "string" then
         local x = {}
         x[1] = opts
@@ -168,7 +168,7 @@ function m.open(opts) -- {{{
     opts.command = m.commandExtraCommands(opts.command or opts[1])
 
     if os.getenv("TMUX") then
-        m.openTmuxTerm {
+        m.openTmuxFloaTerm {
             command = opts.command,
             closeOnExit = opts.closeOnExit,
             heightPercentage = opts.heightPercentage,
@@ -178,7 +178,7 @@ function m.open(opts) -- {{{
             stopVim = opts.stopVim,
         }
     elseif os.getenv("ZELLIJ") then
-        m.openZellijTerm {
+        m.openZellijFloaTerm {
             command = opts.command,
             closeOnExit = opts.closeOnExit,
             heightPercentage = opts.heightPercentage,
@@ -188,7 +188,7 @@ function m.open(opts) -- {{{
             stopVim = opts.stopVim,
         }
     else
-        m.openNeovimTerm {
+        m.openNeovimFloaTerm {
             command = opts.command,
             heightPercentage = opts.heightPercentage,
             widthPercentage = opts.widthPercentage,
