@@ -79,7 +79,7 @@ function m.openTmuxTerm(opts) -- {{{
     end
 end -- }}}
 
-function m.openZellijTerm(opts)
+function m.openZellijTerm(opts) -- {{{
     if type(opts) == "string" then
         local x = {}
         x[1] = opts
@@ -126,9 +126,9 @@ function m.openZellijTerm(opts)
     else
         vim.system(execute)
     end
-end
+end -- }}}
 
-function m.open(opts)
+function m.open(opts) -- {{{
     if type(opts) == "string" then
         local x = {}
         x[1] = opts
@@ -174,9 +174,9 @@ function m.open(opts)
             closeOnExit = opts.closeOnExit,
         }
     end
-end
+end -- }}}
 
-function m.setup(opts)
+function m.setup(opts) -- {{{
     opts = opts or {}
 
     m.heightPercentage = opts.heightPercentage or 70
@@ -192,4 +192,4 @@ function m.setup(opts)
     m.zellijYoffset = opts.zellijYoffset or 2
 end
 
-return m
+return m -- }}}
