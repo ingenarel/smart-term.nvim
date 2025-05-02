@@ -1,6 +1,28 @@
 local m = {}
 
+function m.commandExtraCommands(command) -- {{{
+    if command == nil then
+        return os.getenv("SHELL")
+    end
+
+    local commands = {
+        lazygit = function()
+            vim.cmd("w")
+            print("lazygit: " .. command)
+            return command
+        end,
+        default = function()
+            print("default: " .. command)
+            return command
+        end,
+    }
+
+    local fn = commands[command] or commands.default
+    return fn()
+end -- }}}
+
 function m.openNeovimTerm(opts) -- {{{
+    -- vim.print(opts)
     if type(opts) == "string" then
         local x = {}
         x[1] = opts
@@ -9,6 +31,13 @@ function m.openNeovimTerm(opts) -- {{{
     elseif type(opts) ~= "table" then
         opts = {}
     end
+    -- vim.print(opts)
+
+    -- print(opts.command)
+
+    opts.command = m.commandExtraCommands(opts.command or opts[1])
+
+    -- print(opts.command)
 
     ---@type integer
     local floatingWinWidth = math.floor(vim.o.columns / 100 * (opts.widthPercentage or m.widthPercentage))
@@ -25,7 +54,7 @@ function m.openNeovimTerm(opts) -- {{{
         style = "minimal",
     })
 
-    vim.fn.jobstart(opts.command or opts[1] or os.getenv("SHELL"), {
+    vim.fn.jobstart(opts.command, {
         term = true,
         on_exit = function()
             if opts.closeOnExit or opts.closeOnExit == nil then
@@ -51,6 +80,8 @@ function m.openTmuxTerm(opts) -- {{{
     ---@type integer
     local floatingWinHeight = math.floor(vim.o.lines / 100 * (opts.heightPercentage or m.heightPercentage))
 
+    opts.command = m.commandExtraCommands(opts.command or opts[1])
+
     local execute = {
         "tmux",
         "display-popup",
@@ -66,7 +97,7 @@ function m.openTmuxTerm(opts) -- {{{
         vim.fn.getcwd(),
         "-b",
         "rounded",
-        opts.command or opts[1],
+        opts.command,
     }
     if opts.closeOnExit or opts.closeOnExit == nil then
         table.insert(execute, 3, "-E")
@@ -89,11 +120,7 @@ function m.openZellijTerm(opts) -- {{{
         opts = {}
     end
 
-    opts.command = opts.command or opts[1]
-
-    if opts.command == nil then
-        opts.command = os.getenv("SHELL")
-    end
+    opts.command = m.commandExtraCommands(opts.command or opts[1])
 
     ---@type integer
     local floatingWinWidth = math.floor(vim.o.columns / 100 * (opts.widthPercentage or m.widthPercentage))
@@ -138,11 +165,7 @@ function m.open(opts) -- {{{
         opts = {}
     end
 
-    opts.command = opts.command or opts[1]
-
-    if opts.command == "lazygit" then
-        vim.cmd("w")
-    end
+    opts.command = m.commandExtraCommands(opts.command or opts[1])
 
     if os.getenv("TMUX") then
         m.openTmuxTerm {
