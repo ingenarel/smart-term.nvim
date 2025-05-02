@@ -218,6 +218,7 @@ function m.openNeovimSpliTerm(opts)
         -- width = floatingWinWidth,
         height = opts.height,
         split = opts.side,
+        width = opts.width,
         style = "minimal",
     })
 
