@@ -199,6 +199,39 @@ function m.openFloaTerm(opts) -- {{{
     end
 end -- }}}
 
+function m.openNeovimSpliTerm(opts)
+    if type(opts) == "string" then
+        local x = {}
+        x[1] = opts
+        opts = x
+        x = nil
+    elseif type(opts) ~= "table" then
+        opts = {}
+    end
+    -- vim.print(opts)
+
+    -- print(opts.command)
+
+    opts.command = m.commandExtraCommands(opts.command or opts[1])
+
+    vim.api.nvim_open_win(vim.api.nvim_create_buf(false, true), true, {
+        -- width = floatingWinWidth,
+        height = opts.height,
+        split = opts.side,
+        style = "minimal",
+    })
+
+    vim.fn.jobstart(opts.command, {
+        term = true,
+        on_exit = function()
+            if opts.closeOnExit or opts.closeOnExit == nil then
+                vim.cmd("q")
+            end
+        end,
+    })
+    vim.cmd.startinsert()
+end
+
 function m.setup(opts) -- {{{
     opts = opts or {}
 
