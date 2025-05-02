@@ -1,6 +1,6 @@
 local m = {}
 
-function m.openNeovimTerm(opts)
+function m.openNeovimTerm(opts) -- {{{
     if type(opts) == "string" then
         local x = {}
         x[1] = opts
@@ -34,9 +34,9 @@ function m.openNeovimTerm(opts)
         end,
     })
     vim.cmd.startinsert()
-end
+end -- }}}
 
-function m.openTmuxTerm(opts)
+function m.openTmuxTerm(opts) -- {{{
     if type(opts) == "string" then
         local x = {}
         x[1] = opts
@@ -77,7 +77,7 @@ function m.openTmuxTerm(opts)
     else
         vim.system(execute)
     end
-end
+end -- }}}
 
 function m.openZellijTerm(opts)
     if type(opts) == "string" then
