@@ -32,16 +32,16 @@ function m.openNeovimFloaTerm(opts) -- {{{
     opts.command = m.commandExtraCommands(opts.command or opts[1])
 
     ---@type integer
-    local floatingWinWidth = math.floor(vim.o.columns / 100 * (opts.widthPercentage or m.widthPercentage))
+    local floatingWinWidth = math.floor(vim.o.columns / 100 * (opts.widthPercentage or m.floatWidthPercentage))
     ---@type integer
-    local floatingWinHeight = math.floor(vim.o.lines / 100 * (opts.heightPercentage or m.heightPercentage))
+    local floatingWinHeight = math.floor(vim.o.lines / 100 * (opts.heightPercentage or m.floatHeightPercentage))
 
     vim.api.nvim_open_win(vim.api.nvim_create_buf(false, true), true, {
         relative = "editor",
         width = floatingWinWidth,
         height = floatingWinHeight,
-        col = math.floor((vim.o.columns - floatingWinWidth + (opts.xOffset or m.neovimXoffset)) / 2),
-        row = math.floor((vim.o.lines - floatingWinHeight + (opts.yOffset or m.neovimYoffset)) / 2),
+        col = math.floor((vim.o.columns - floatingWinWidth + (opts.xOffset or m.floatNeovimXoffset)) / 2),
+        row = math.floor((vim.o.lines - floatingWinHeight + (opts.yOffset or m.floatNeovimYoffset)) / 2),
         border = "rounded",
         style = "minimal",
     })
@@ -68,9 +68,9 @@ function m.openTmuxFloaTerm(opts) -- {{{
     end
 
     ---@type integer
-    local floatingWinWidth = math.floor(vim.o.columns / 100 * (opts.widthPercentage or m.widthPercentage))
+    local floatingWinWidth = math.floor(vim.o.columns / 100 * (opts.widthPercentage or m.floatWidthPercentage))
     ---@type integer
-    local floatingWinHeight = math.floor(vim.o.lines / 100 * (opts.heightPercentage or m.heightPercentage))
+    local floatingWinHeight = math.floor(vim.o.lines / 100 * (opts.heightPercentage or m.floatHeightPercentage))
 
     opts.command = m.commandExtraCommands(opts.command or opts[1])
 
@@ -82,9 +82,9 @@ function m.openTmuxFloaTerm(opts) -- {{{
         "-h",
         tostring(floatingWinHeight),
         "-x",
-        tostring(math.floor((vim.o.columns - floatingWinWidth + (opts.xOffset or m.tmuxXoffset)) / 2)),
+        tostring(math.floor((vim.o.columns - floatingWinWidth + (opts.xOffset or m.floatTmuxXoffset)) / 2)),
         "-y",
-        tostring(math.floor((vim.o.lines + floatingWinHeight + (opts.yOffset or m.tmuxYoffset)) / 2)),
+        tostring(math.floor((vim.o.lines + floatingWinHeight + (opts.yOffset or m.floatTmuxYoffset)) / 2)),
         "-d",
         vim.fn.getcwd(),
         "-b",
@@ -115,9 +115,9 @@ function m.openZellijFloaTerm(opts) -- {{{
     opts.command = m.commandExtraCommands(opts.command or opts[1])
 
     ---@type integer
-    local floatingWinWidth = math.floor(vim.o.columns / 100 * (opts.widthPercentage or m.widthPercentage))
+    local floatingWinWidth = math.floor(vim.o.columns / 100 * (opts.widthPercentage or m.floatWidthPercentage))
     ---@type integer
-    local floatingWinHeight = math.floor(vim.o.lines / 100 * (opts.heightPercentage or m.heightPercentage))
+    local floatingWinHeight = math.floor(vim.o.lines / 100 * (opts.heightPercentage or m.floatHeightPercentage))
     local execute = {
         "zellij",
         "action",
@@ -128,9 +128,9 @@ function m.openZellijFloaTerm(opts) -- {{{
         "--height",
         tostring(floatingWinHeight),
         "-x",
-        tostring(math.floor((vim.o.columns - floatingWinWidth + (opts.xOffset or m.zellijXoffset)) / 2)),
+        tostring(math.floor((vim.o.columns - floatingWinWidth + (opts.xOffset or m.floatZellijXoffset)) / 2)),
         "-y",
-        tostring(math.floor((vim.o.lines - floatingWinHeight + (opts.yOffset or m.zellijYoffset)) / 2)),
+        tostring(math.floor((vim.o.lines - floatingWinHeight + (opts.yOffset or m.floatZellijYoffset)) / 2)),
     }
 
     if opts.closeOnExit or opts.closeOnExit == nil then
@@ -266,17 +266,17 @@ end -- }}}
 function m.setup(opts) -- {{{
     opts = opts or {}
 
-    m.heightPercentage = opts.heightPercentage or 70
-    m.widthPercentage = opts.widthPercentage or 80
+    m.floatHeightPercentage = opts.floatHeightPercentage or 70
+    m.floatWidthPercentage = opts.floatWidthPercentage or 80
 
-    m.neovimXoffset = opts.neovimXoffset or -2
-    m.neovimYoffset = opts.neovimYoffset or -2
+    m.floatNeovimXoffset = opts.floatNeovimXoffset or -2
+    m.floatNeovimYoffset = opts.floatNeovimYoffset or -2
 
-    m.tmuxXoffset = opts.tmuxXoffset or -2
-    m.tmuxYoffset = opts.tmuxYoffset or -2
+    m.floatTmuxXoffset = opts.floatTmuxXoffset or -2
+    m.floatTmuxYoffset = opts.floatTmuxYoffset or -2
 
-    m.zellijXoffset = opts.zellijXoffset or -2
-    m.zellijYoffset = opts.zellijYoffset or 2
+    m.floatZellijXoffset = opts.floatZellijXoffset or -2
+    m.floatZellijYoffset = opts.floatZellijYoffset or 2
 end
 
 return m -- }}}
