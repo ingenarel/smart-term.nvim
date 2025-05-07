@@ -275,6 +275,6 @@ function m.setup(opts) -- {{{
 
     m.floatZellijXoffset = opts.floatZellijXoffset or -2
     m.floatZellijYoffset = opts.floatZellijYoffset or 2
-end
+end -- }}}
 
-return m -- }}}
+return m
