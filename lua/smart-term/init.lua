@@ -1,24 +1,5 @@
 local m = {}
 
-function m.commandExtraCommands(command) -- {{{
-    if command == nil then
-        return os.getenv("SHELL")
-    end
-
-    local commands = {
-        lazygit = function()
-            vim.cmd("w")
-            return command
-        end,
-        default = function()
-            return command
-        end,
-    }
-
-    local fn = commands[command] or commands.default
-    return fn()
-end -- }}}
-
 function m.openNeovimFloaTerm(opts) -- {{{
     if type(opts) == "string" then
         local x = {}
@@ -29,7 +10,7 @@ function m.openNeovimFloaTerm(opts) -- {{{
         opts = {}
     end
 
-    opts.command = m.commandExtraCommands(opts.command or opts[1])
+    opts.command = require("smart-term.utils").commandExtraCommands(opts.command or opts[1])
 
     ---@type integer
     local floatingWinWidth = math.floor(vim.o.columns / 100 * (opts.widthPercentage or m.floatWidthPercentage))
@@ -72,7 +53,7 @@ function m.openTmuxFloaTerm(opts) -- {{{
     ---@type integer
     local floatingWinHeight = math.floor(vim.o.lines / 100 * (opts.heightPercentage or m.floatHeightPercentage))
 
-    opts.command = m.commandExtraCommands(opts.command or opts[1])
+    opts.command = require("smart-term.utils").commandExtraCommands(opts.command or opts[1])
 
     local execute = {
         "tmux",
@@ -112,7 +93,7 @@ function m.openZellijFloaTerm(opts) -- {{{
         opts = {}
     end
 
-    opts.command = m.commandExtraCommands(opts.command or opts[1])
+    opts.command = require("smart-term.utils").commandExtraCommands(opts.command or opts[1])
 
     ---@type integer
     local floatingWinWidth = math.floor(vim.o.columns / 100 * (opts.widthPercentage or m.floatWidthPercentage))
@@ -157,7 +138,7 @@ function m.openFloaTerm(opts) -- {{{
         opts = {}
     end
 
-    opts.command = m.commandExtraCommands(opts.command or opts[1])
+    opts.command = require("smart-term.utils").commandExtraCommands(opts.command or opts[1])
 
     if os.getenv("TMUX") then
         m.openTmuxFloaTerm {
@@ -201,7 +182,7 @@ function m.openNeovimSpliTerm(opts) -- {{{
         opts = {}
     end
 
-    opts.command = m.commandExtraCommands(opts.command or opts[1])
+    opts.command = require("smart-term.utils").commandExtraCommands(opts.command or opts[1])
 
     vim.api.nvim_open_win(vim.api.nvim_create_buf(false, true), true, {
         split = opts.side or "below",
@@ -231,7 +212,7 @@ function m.openTmuxSpliTerm(opts) -- {{{
         opts = {}
     end
 
-    opts.command = m.commandExtraCommands(opts.command or opts[1])
+    opts.command = require("smart-term.utils").commandExtraCommands(opts.command or opts[1])
 
     local execute = {
         "tmux",
