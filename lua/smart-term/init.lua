@@ -220,17 +220,24 @@ function m.openTmuxSpliTerm(opts) -- {{{
 
     table.insert(execute, "split-window")
 
-    if opts.side == "below" or opts.side == nil then
-        table.insert(execute, "-v")
-    elseif opts.side == "right" then
-        table.insert(execute, "-h")
-    elseif opts.side == "above" then
-        table.insert(execute, "-v")
-        table.insert(execute, "-b")
-    elseif opts.side == "left" then
-        table.insert(execute, "-h")
-        table.insert(execute, "-b")
-    end
+    local sides = {
+        below = function()
+            table.insert(execute, "-v")
+        end,
+        right = function()
+            table.insert(execute, "-h")
+        end,
+        above = function()
+            table.insert(execute, "-v")
+            table.insert(execute, "-b")
+        end,
+        left = function()
+            table.insert(execute, "-h")
+            table.insert(execute, "-b")
+        end,
+    }
+
+    sides[(opts.side or "below")]()
 
     table.insert(execute, "-l")
     table.insert(execute, opts.size or 15)
