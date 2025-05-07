@@ -220,27 +220,34 @@ function m.openTmuxSpliTerm(opts) -- {{{
 
     table.insert(execute, "split-window")
 
+    ---@type integer
+    local size
+
     local sides = {
         below = function()
             table.insert(execute, "-v")
+            size = math.floor(vim.o.lines / 100 * (opts.sizePercent or m.splitHeightPercentage))
         end,
         right = function()
             table.insert(execute, "-h")
+            size = math.floor(vim.o.columns / 100 * (opts.sizePercent or m.splitWidthPercentage))
         end,
         above = function()
             table.insert(execute, "-v")
             table.insert(execute, "-b")
+            size = math.floor(vim.o.lines / 100 * (opts.sizePercent or m.splitHeightPercentage))
         end,
         left = function()
             table.insert(execute, "-h")
             table.insert(execute, "-b")
+            size = math.floor(vim.o.columns / 100 * (opts.sizePercent or m.splitWidthPercentage))
         end,
     }
 
     sides[(opts.side or "below")]()
 
     table.insert(execute, "-l")
-    table.insert(execute, opts.size or 15)
+    table.insert(execute, size)
 
     table.insert(execute, opts.command)
 
@@ -256,6 +263,9 @@ function m.setup(opts) -- {{{
 
     m.floatHeightPercentage = opts.floatHeightPercentage or 70
     m.floatWidthPercentage = opts.floatWidthPercentage or 80
+
+    m.splitHeightPercentage = opts.splitHeightPercentage or 33
+    m.splitWidthPercentage = opts.splitWidthPercentage or 33
 
     m.floatNeovimXoffset = opts.floatNeovimXoffset or -2
     m.floatNeovimYoffset = opts.floatNeovimYoffset or -2
