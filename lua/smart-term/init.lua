@@ -12,7 +12,9 @@ function m.openNeovimFloaTerm(opts) -- {{{
         opts = {}
     end
 
-    opts.command = utils.commandExtraCommands(opts.command or opts[1])
+    if opts.runCommandExtraCommands or opts.runCommandExtraCommands == nil then
+        opts.command = utils.commandExtraCommands(opts.command or opts[1])
+    end
 
     ---@type integer
     local floatingWinWidth = math.floor(vim.o.columns / 100 * (opts.widthPercentage or m.floatWidthPercentage))
@@ -55,7 +57,9 @@ function m.openTmuxFloaTerm(opts) -- {{{
     ---@type integer
     local floatingWinHeight = math.floor(vim.o.lines / 100 * (opts.heightPercentage or m.floatHeightPercentage))
 
-    opts.command = utils.commandExtraCommands(opts.command or opts[1])
+    if opts.runCommandExtraCommands or opts.runCommandExtraCommands == nil then
+        opts.command = utils.commandExtraCommands(opts.command or opts[1])
+    end
 
     local execute = {
         "tmux",
@@ -95,7 +99,9 @@ function m.openZellijFloaTerm(opts) -- {{{
         opts = {}
     end
 
-    opts.command = utils.commandExtraCommands(opts.command or opts[1])
+    if opts.runCommandExtraCommands or opts.runCommandExtraCommands == nil then
+        opts.command = utils.commandExtraCommands(opts.command or opts[1])
+    end
 
     ---@type integer
     local floatingWinWidth = math.floor(vim.o.columns / 100 * (opts.widthPercentage or m.floatWidthPercentage))
@@ -151,6 +157,7 @@ function m.openFloaTerm(opts) -- {{{
             xOffset = opts.xOffset,
             yOffset = opts.yOffset,
             stopVim = opts.stopVim,
+            runCommandExtraCommands = false,
         }
     elseif os.getenv("ZELLIJ") then
         m.openZellijFloaTerm {
@@ -161,6 +168,7 @@ function m.openFloaTerm(opts) -- {{{
             xOffset = opts.xOffset,
             yOffset = opts.yOffset,
             stopVim = opts.stopVim,
+            runCommandExtraCommands = false,
         }
     else
         m.openNeovimFloaTerm {
@@ -170,6 +178,7 @@ function m.openFloaTerm(opts) -- {{{
             xOffset = opts.xOffset,
             yOffset = opts.yOffset,
             closeOnExit = opts.closeOnExit,
+            runCommandExtraCommands = false,
         }
     end
 end -- }}}
@@ -184,7 +193,9 @@ function m.openNeovimSpliTerm(opts) -- {{{
         opts = {}
     end
 
-    opts.command = utils.commandExtraCommands(opts.command or opts[1])
+    if opts.runCommandExtraCommands or opts.runCommandExtraCommands == nil then
+        opts.command = utils.commandExtraCommands(opts.command or opts[1])
+    end
 
     vim.api.nvim_open_win(vim.api.nvim_create_buf(false, true), true, {
         split = opts.side or "below",
@@ -214,7 +225,9 @@ function m.openTmuxSpliTerm(opts) -- {{{
         opts = {}
     end
 
-    opts.command = utils.commandExtraCommands(opts.command or opts[1])
+    if opts.runCommandExtraCommands or opts.runCommandExtraCommands == nil then
+        opts.command = utils.commandExtraCommands(opts.command or opts[1])
+    end
 
     local execute = {
         "tmux",
@@ -269,7 +282,9 @@ function m.openZellijSpliTerm(opts) -- {{{
         opts = {}
     end
 
-    opts.command = utils.commandExtraCommands(opts.command or opts[1])
+    if opts.runCommandExtraCommands or opts.runCommandExtraCommands == nil then
+        opts.command = utils.commandExtraCommands(opts.command or opts[1])
+    end
 
     print(opts.command)
 
@@ -347,6 +362,7 @@ function m.openSpliTerm(opts) -- {{{
             closeOnExit = opts.closeOnExit,
             sizePercent = opts.sizePercent,
             stopVim = opts.stopVim,
+            commandExtraCommands = false,
         }
     elseif os.getenv("ZELLIJ") then
         m.openZellijSpliTerm {
@@ -354,6 +370,7 @@ function m.openSpliTerm(opts) -- {{{
             side = opts.side,
             closeOnExit = opts.closeOnExit,
             stopVim = opts.stopVim,
+            commandExtraCommands = false,
         }
     else
         m.openNeovimSpliTerm {
@@ -361,6 +378,7 @@ function m.openSpliTerm(opts) -- {{{
             side = opts.side,
             size = opts.size,
             closeOnExit = opts.closeOnExit,
+            commandExtraCommands = false,
         }
     end
 end -- }}}
