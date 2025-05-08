@@ -19,4 +19,16 @@ function m.commandExtraCommands(command) -- {{{
     return fn()
 end -- }}}
 
+function m.directionSubtitution(table)
+    table.up = table.above
+    table.k = table.above
+
+    table.down = table.down
+    table.j = table.j
+
+    table.h = table.left
+
+    table.l = table.right
+end
+
 return m
