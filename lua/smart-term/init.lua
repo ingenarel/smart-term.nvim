@@ -216,9 +216,8 @@ function m.openTmuxSpliTerm(opts) -- {{{
 
     local execute = {
         "tmux",
+        "split-window",
     }
-
-    table.insert(execute, "split-window")
 
     ---@type integer
     local size
