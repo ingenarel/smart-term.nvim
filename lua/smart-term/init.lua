@@ -257,6 +257,75 @@ function m.openTmuxSpliTerm(opts) -- {{{
     end
 end -- }}}
 
+function m.openZellijSpliTerm(opts) -- {{{
+    if type(opts) == "string" then
+        local x = {}
+        x[1] = opts
+        opts = x
+        x = nil
+    elseif type(opts) ~= "table" then
+        opts = {}
+    end
+
+    opts.command = require("smart-term.utils").commandExtraCommands(opts.command or opts[1])
+
+    print(opts.command)
+
+    local execute = {
+        "sh",
+        "-c",
+        "zellij action new-pane ",
+    }
+
+    --TODO: figure out how to specify custom sizes
+
+    -- ---@type integer
+    -- local size
+
+    local sides = {
+        below = function()
+            execute[3] = execute[3] .. "--direction=down "
+            if opts.closeOnExit or opts.closeOnExit == nil then
+                execute[3] = execute[3] .. " --close-on-exit "
+            end
+            execute[3] = execute[3] .. " -- " .. opts.command
+            -- size = math.floor(vim.o.lines / 100 * (opts.sizePercent or m.splitHeightPercentage))
+        end,
+        right = function()
+            execute[3] = execute[3] .. " --direction=right "
+            if opts.closeOnExit or opts.closeOnExit == nil then
+                execute[3] = execute[3] .. " --close-on-exit "
+            end
+            execute[3] = execute[3] .. " -- " .. opts.command
+            -- size = math.floor(vim.o.columns / 100 * (opts.sizePercent or m.splitWidthPercentage))
+        end,
+        above = function()
+            execute[3] = execute[3] .. " --direction=down "
+            if opts.closeOnExit or opts.closeOnExit == nil then
+                execute[3] = execute[3] .. " --close-on-exit "
+            end
+            execute[3] = execute[3] .. " -- " .. opts.command .. " && zellij action move-pane up"
+            -- size = math.floor(vim.o.lines / 100 * (opts.sizePercent or m.splitHeightPercentage))
+        end,
+        left = function()
+            execute[3] = execute[3] .. " --direction=right "
+            if opts.closeOnExit or opts.closeOnExit == nil then
+                execute[3] = execute[3] .. " --close-on-exit "
+            end
+            execute[3] = execute[3] .. " -- " .. opts.command .. " && zellij action move-pane left"
+            -- size = math.floor(vim.o.columns / 100 * (opts.sizePercent or m.splitWidthPercentage))
+        end,
+    }
+
+    sides[(opts.side or "below")]()
+
+    if opts.stopVim then
+        vim.system(execute):wait()
+    else
+        vim.system(execute)
+    end
+end -- }}}
+
 function m.setup(opts) -- {{{
     opts = opts or {}
 
