@@ -326,6 +326,43 @@ function m.openZellijSpliTerm(opts) -- {{{
     end
 end -- }}}
 
+function m.openSpliTerm(opts) -- {{{
+    if type(opts) == "string" then
+        local x = {}
+        x[1] = opts
+        opts = x
+        x = nil
+    elseif type(opts) ~= "table" then
+        opts = {}
+    end
+
+    opts.command = require("smart-term.utils").commandExtraCommands(opts.command or opts[1])
+
+    if os.getenv("TMUX") then
+        m.openTmuxSpliTerm {
+            command = opts.command,
+            side = opts.side,
+            closeOnExit = opts.closeOnExit,
+            sizePercent = opts.sizePercent,
+            stopVim = opts.stopVim,
+        }
+    elseif os.getenv("ZELLIJ") then
+        m.openZellijSpliTerm {
+            command = opts.command,
+            side = opts.side,
+            closeOnExit = opts.closeOnExit,
+            stopVim = opts.stopVim,
+        }
+    else
+        m.openNeovimSpliTerm {
+            command = opts.command,
+            side = opts.side,
+            size = opts.size,
+            closeOnExit = opts.closeOnExit,
+        }
+    end
+end -- }}}
+
 function m.setup(opts) -- {{{
     opts = opts or {}
 
