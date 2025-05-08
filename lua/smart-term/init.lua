@@ -1,5 +1,7 @@
 local m = {}
 
+local utils = require("smart-term.utils")
+
 function m.openNeovimFloaTerm(opts) -- {{{
     if type(opts) == "string" then
         local x = {}
@@ -10,7 +12,7 @@ function m.openNeovimFloaTerm(opts) -- {{{
         opts = {}
     end
 
-    opts.command = require("smart-term.utils").commandExtraCommands(opts.command or opts[1])
+    opts.command = utils.commandExtraCommands(opts.command or opts[1])
 
     ---@type integer
     local floatingWinWidth = math.floor(vim.o.columns / 100 * (opts.widthPercentage or m.floatWidthPercentage))
@@ -53,7 +55,7 @@ function m.openTmuxFloaTerm(opts) -- {{{
     ---@type integer
     local floatingWinHeight = math.floor(vim.o.lines / 100 * (opts.heightPercentage or m.floatHeightPercentage))
 
-    opts.command = require("smart-term.utils").commandExtraCommands(opts.command or opts[1])
+    opts.command = utils.commandExtraCommands(opts.command or opts[1])
 
     local execute = {
         "tmux",
@@ -93,7 +95,7 @@ function m.openZellijFloaTerm(opts) -- {{{
         opts = {}
     end
 
-    opts.command = require("smart-term.utils").commandExtraCommands(opts.command or opts[1])
+    opts.command = utils.commandExtraCommands(opts.command or opts[1])
 
     ---@type integer
     local floatingWinWidth = math.floor(vim.o.columns / 100 * (opts.widthPercentage or m.floatWidthPercentage))
@@ -138,7 +140,7 @@ function m.openFloaTerm(opts) -- {{{
         opts = {}
     end
 
-    opts.command = require("smart-term.utils").commandExtraCommands(opts.command or opts[1])
+    opts.command = utils.commandExtraCommands(opts.command or opts[1])
 
     if os.getenv("TMUX") then
         m.openTmuxFloaTerm {
@@ -182,7 +184,7 @@ function m.openNeovimSpliTerm(opts) -- {{{
         opts = {}
     end
 
-    opts.command = require("smart-term.utils").commandExtraCommands(opts.command or opts[1])
+    opts.command = utils.commandExtraCommands(opts.command or opts[1])
 
     vim.api.nvim_open_win(vim.api.nvim_create_buf(false, true), true, {
         split = opts.side or "below",
@@ -212,7 +214,7 @@ function m.openTmuxSpliTerm(opts) -- {{{
         opts = {}
     end
 
-    opts.command = require("smart-term.utils").commandExtraCommands(opts.command or opts[1])
+    opts.command = utils.commandExtraCommands(opts.command or opts[1])
 
     local execute = {
         "tmux",
@@ -267,7 +269,7 @@ function m.openZellijSpliTerm(opts) -- {{{
         opts = {}
     end
 
-    opts.command = require("smart-term.utils").commandExtraCommands(opts.command or opts[1])
+    opts.command = utils.commandExtraCommands(opts.command or opts[1])
 
     print(opts.command)
 
@@ -336,7 +338,7 @@ function m.openSpliTerm(opts) -- {{{
         opts = {}
     end
 
-    opts.command = require("smart-term.utils").commandExtraCommands(opts.command or opts[1])
+    opts.command = utils.commandExtraCommands(opts.command or opts[1])
 
     if os.getenv("TMUX") then
         m.openTmuxSpliTerm {
