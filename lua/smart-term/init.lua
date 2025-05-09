@@ -197,17 +197,24 @@ function m.openNeovimSpliTerm(opts) -- {{{
         opts.command = utils.commandExtraCommands(opts.command or opts[1])
     end
 
+    ---@type integer
+    local size
+
     local sides = {
         below = function()
+            size = math.floor(vim.o.lines / 100 * (opts.sizePercent or m.splitHeightPercentage))
             return "below"
         end,
         right = function()
+            size = math.floor(vim.o.columns / 100 * (opts.sizePercent or m.splitWidthPercentage))
             return "right"
         end,
         above = function()
+            size = math.floor(vim.o.lines / 100 * (opts.sizePercent or m.splitHeightPercentage))
             return "above"
         end,
         left = function()
+            size = math.floor(vim.o.columns / 100 * (opts.sizePercent or m.splitWidthPercentage))
             return "left"
         end,
     }
@@ -219,7 +226,7 @@ function m.openNeovimSpliTerm(opts) -- {{{
         style = "minimal",
     })
 
-    vim.cmd.resize(opts.size or 15)
+    vim.cmd.resize(size)
 
     vim.fn.jobstart(opts.command, {
         term = true,
