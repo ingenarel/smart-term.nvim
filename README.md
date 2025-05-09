@@ -42,7 +42,7 @@ Using lazy.nvim:
 
 ## Using:
 
-### open a floating terminal, depending on your enviroment:
+### Open a floating terminal, depending on your enviroment:
 
 ```lua
 require("smart-term").openFloaTerm{
@@ -56,6 +56,9 @@ require("smart-term").openFloaTerm{
     stopVim = false, --optional if you want to stop nvim when the pane is running (works only for tmux and zellij)
 }
 ```
+
+This function, in turn, calls either `openNeovimFloaTerm()` or `openTmuxFloaTerm()` or `openZellijFloaTerm()` function
+
 Examples: 
 
 Automatically use tmux's display-popup feature
