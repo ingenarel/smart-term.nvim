@@ -58,6 +58,11 @@ require("smart-term").openFloaTerm{
 ```
 Examples: 
 
+Automatically use tmux's display-popup feature
 ![tmux](pictures/tmux.png)
+
+Automatically use Zellij's --floating feature
 ![zellij](pictures/zellij.png)
+
+Automatically use Neovim's built-in floating windows
 ![nvim](pictures/nvim.png)
