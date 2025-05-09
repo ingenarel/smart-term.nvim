@@ -23,8 +23,8 @@ function m.directionSubtitution(table)
     table.up = table.above
     table.k = table.above
 
-    table.down = table.down
-    table.j = table.j
+    table.down = table.below
+    table.j = table.below
 
     table.h = table.left
 
