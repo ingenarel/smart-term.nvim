@@ -51,8 +51,8 @@ require("smart-term").openFloaTerm{
     closeOnExit = true, -- if true, close the pane when the command exists,
     heightPercentage = 70, --optional height percentage
     widthPercentage = 70, --optional width percentage
-    xOffset = -2, --optional for floating neovim panes X offset by chars
-    yOffset = -2, --optional for floating neovim panes Y offset by chars
+    xOffset = -2, --optional for floating panes X offset by chars
+    yOffset = -2, --optional for floating panes Y offset by chars
     stopVim = false, --optional if you want to stop nvim when the pane is running (works only for tmux and zellij)
 }
 ```
