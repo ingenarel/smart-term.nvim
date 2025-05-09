@@ -258,6 +258,8 @@ function m.openTmuxSpliTerm(opts) -- {{{
         end,
     }
 
+    utils.directionSubtitution(sides)
+
     sides[(opts.side or "below")]()
 
     table.insert(execute, "-l")
@@ -333,6 +335,8 @@ function m.openZellijSpliTerm(opts) -- {{{
             -- size = math.floor(vim.o.columns / 100 * (opts.sizePercent or m.splitWidthPercentage))
         end,
     }
+
+    utils.directionSubtitution(sides)
 
     sides[(opts.side or "below")]()
 
