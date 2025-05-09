@@ -197,8 +197,25 @@ function m.openNeovimSpliTerm(opts) -- {{{
         opts.command = utils.commandExtraCommands(opts.command or opts[1])
     end
 
+    local sides = {
+        below = function()
+            return "below"
+        end,
+        right = function()
+            return "right"
+        end,
+        above = function()
+            return "above"
+        end,
+        left = function()
+            return "left"
+        end,
+    }
+
+    utils.directionSubtitution(sides)
+
     vim.api.nvim_open_win(vim.api.nvim_create_buf(false, true), true, {
-        split = opts.side or "below",
+        split = sides[(opts.side or "below")](),
         style = "minimal",
     })
 
