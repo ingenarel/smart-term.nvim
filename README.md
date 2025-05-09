@@ -55,3 +55,9 @@ require("smart-term").openFloaTerm{
     yOffset = -2, --optional for floating neovim panes Y offset by chars
     stopVim = false, --optional if you want to stop nvim when the pane is running (works only for tmux and zellij)
 }
+```
+Examples: 
+
+![tmux](pictures/tmux.png)
+![zellij](pictures/zellij.png)
+![nvim](pictures/nvim.png)
