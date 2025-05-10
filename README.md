@@ -69,3 +69,17 @@ Automatically use Zellij's --floating feature
 
 Automatically use Neovim's built-in floating windows
 ![nvim](pictures/nvim.png)
+
+### Open a floating terminal, using Neovim's built-in terminal:
+
+```lua
+require("smart-term").openNeovimFloaTerm {
+    "btop", -- optional command, if not specified, opens the current $SHELL instead
+    -- command = "btop", -- you can also use command="command", instead of using the first item as a command
+    closeOnExit = true, -- if true, close the pane when the command exists, default is true
+    heightPercentage = 70, --optional height percentage, default is 70
+    widthPercentage = 80, --optional width percentage, default is 80
+    xOffset = -2, --optional for floating neovim panes X offset by chars, default is -2
+    yOffset = -2, --optional for floating neovim panes Y offset by chars, default is -2
+}
+```
