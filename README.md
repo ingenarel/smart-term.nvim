@@ -1,4 +1,4 @@
-# A Neovim terminal plugin on crack!
+# A Neovim terminal plugin on crack! <!-- {{{ -->
 
 Open a process or a shell easily as a:
 
@@ -13,8 +13,9 @@ That can use:
 - [x] Tmux's built-in windows
 - [ ] Kitty's built-in windows
 - [ ] wezterm's built-in windows
+<!-- }}} -->
 
-## setup:
+## setup: <!--{{{-->
 
 Using lazy.nvim:
 
@@ -39,10 +40,11 @@ Using lazy.nvim:
     },
 }
 ```
+<!--}}}-->
 
 ## Using:
 
-### Open a floating terminal, depending on your environment:
+### Open a floating terminal, depending on your environment: <!--{{{-->
 
 ```lua
 require("smart-term").openFloaTerm{
@@ -69,8 +71,9 @@ Automatically use Zellij's --floating feature
 
 Automatically use Neovim's built-in floating windows
 ![nvim](pictures/nvim.png)
+<!--}}}-->
 
-### Open a floating terminal, using Neovim's built-in terminal:
+### Open a floating terminal, using Neovim's built-in terminal: <!--{{{-->
 
 ```lua
 require("smart-term").openNeovimFloaTerm {
@@ -98,8 +101,9 @@ require("smart-term").openTmuxFloaTerm{
     stopVim = false, --optional if you want to stop nvim when the pane is running
 }
 ```
+<!--}}}-->
 
-### Open a floating terminal, using zellij's display-popup
+### Open a floating terminal, using zellij's display-popup <!--{{{-->
 
 ```lua
 require("smart-term").openZellijFloaTerm{
@@ -113,3 +117,4 @@ require("smart-term").openZellijFloaTerm{
     stopVim = false, --optional if you want to stop nvim when the pane is running
 }
 ```
+<!--}}}-->
