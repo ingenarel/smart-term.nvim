@@ -86,8 +86,9 @@ require("smart-term").openNeovimFloaTerm {
     yOffset = -2, --optional for floating neovim panes Y offset by chars, default is -2
 }
 ```
+<!--}}}-->
 
-### Open a floating terminal, using tmux's display-popup
+### Open a floating terminal, using tmux's display-popup <!--{{{-->
 
 ```lua
 require("smart-term").openTmuxFloaTerm{
