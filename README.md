@@ -98,3 +98,18 @@ require("smart-term").openTmuxFloaTerm{
     stopVim = false, --optional if you want to stop nvim when the pane is running
 }
 ```
+
+### Open a floating terminal, using zellij's display-popup
+
+```lua
+require("smart-term").openZellijFloaTerm{
+    "btop", -- optional command, if not specified, opens the current $SHELL instead
+    -- command = "btop", -- you can also use command="command", instead of using the first item as a command
+    closeOnExit = true, -- if true, close the pane when the command exists,
+    heightPercentage = 70, --optional height percentage, default is 70
+    widthPercentage = 80, --optional width percentage, default is 80
+    xOffset = -2, --optional for floating zelij panes X offset by chars, default is -2
+    yOffset = 2, --optional for floating zelij panes Y offset by chars, default is -2
+    stopVim = false, --optional if you want to stop nvim when the pane is running
+}
+```
