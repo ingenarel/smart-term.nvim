@@ -62,17 +62,6 @@ require("smart-term").openFloaTerm{
 
 This function, in turn, calls either `openNeovimFloaTerm()` or `openTmuxFloaTerm()` or `openZellijFloaTerm()` function
 
-Examples: 
-
-Automatically use tmux's display-popup feature
-![tmux](pictures/tmux.png)
-
-Automatically use Zellij's --floating feature
-![zellij](pictures/zellij.png)
-
-Automatically use Neovim's built-in floating windows
-![nvim](pictures/nvim.png)
-
 </details> <!--}}}-->
 
 <details>
@@ -125,5 +114,31 @@ require("smart-term").openZellijFloaTerm{
     stopVim = false, --optional if you want to stop nvim when the pane is running
 }
 ```
+
+</details> <!--}}}-->
+
+<details>
+    <summary> Images </summary> <!--{{{-->
+
+<details>
+    <summary>Automatically use tmux's display-popup feature</summary>
+
+![tmux](pictures/tmux.png)
+
+</details>
+
+<details>
+    <summary>Automatically use Zellij's --floating feature</summary>
+
+![zellij](pictures/zellij.png)
+
+</details>
+
+<details>
+    <summary>Automatically use Neovim's built-in floating windows</summary>
+
+![nvim](pictures/nvim.png)
+
+</details>
 
 </details> <!--}}}-->
