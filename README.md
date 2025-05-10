@@ -44,7 +44,8 @@ Using lazy.nvim:
 
 ## Using:
 
-### Open a floating terminal, depending on your environment: <!--{{{-->
+<details>
+    <summary> Open a floating terminal, depending on your environment:</summary> <!--{{{-->
 
 ```lua
 require("smart-term").openFloaTerm{
@@ -71,9 +72,11 @@ Automatically use Zellij's --floating feature
 
 Automatically use Neovim's built-in floating windows
 ![nvim](pictures/nvim.png)
-<!--}}}-->
 
-### Open a floating terminal, using Neovim's built-in terminal: <!--{{{-->
+</details> <!--}}}-->
+
+<details>
+    <summary> Open a floating terminal, using Neovim's built-in terminal:</summary> <!--{{{-->
 
 ```lua
 require("smart-term").openNeovimFloaTerm {
@@ -86,9 +89,11 @@ require("smart-term").openNeovimFloaTerm {
     yOffset = -2, --optional for floating neovim panes Y offset by chars, default is -2
 }
 ```
-<!--}}}-->
 
-### Open a floating terminal, using tmux's display-popup <!--{{{-->
+</details> <!--}}}-->
+
+<details>
+    <summary> Open a floating terminal, using tmux's display-popup</summary> <!--{{{-->
 
 ```lua
 require("smart-term").openTmuxFloaTerm{
@@ -102,9 +107,11 @@ require("smart-term").openTmuxFloaTerm{
     stopVim = false, --optional if you want to stop nvim when the pane is running
 }
 ```
-<!--}}}-->
 
-### Open a floating terminal, using zellij's display-popup <!--{{{-->
+</details> <!--}}}-->
+
+<details>
+    <summary> Open a floating terminal, using zellij's display-popup</summary> <!--{{{-->
 
 ```lua
 require("smart-term").openZellijFloaTerm{
@@ -118,4 +125,5 @@ require("smart-term").openZellijFloaTerm{
     stopVim = false, --optional if you want to stop nvim when the pane is running
 }
 ```
-<!--}}}-->
+
+</details> <!--}}}-->
