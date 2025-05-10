@@ -42,7 +42,7 @@ Using lazy.nvim:
 
 ## Using:
 
-### Open a floating terminal, depending on your enviroment:
+### Open a floating terminal, depending on your environment:
 
 ```lua
 require("smart-term").openFloaTerm{
