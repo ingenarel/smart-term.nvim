@@ -131,8 +131,69 @@ require("smart-term").openSpliTerm {
         -- above, up, k
         -- below, down, j
     closeOnExit = true, -- if true, close the pane when the command exists,
-    stopVim = false, --optional if you want to stop nvim when the pane is running
+    stopVim = false, --optional if you want to stop nvim when the pane is running (only works in tmux and zellij)
+    sizePercent = 30, -- optional, specify a size percentage (only works in neovim and tmux)
+}
+```
+
+This function, in turn, calls either `openNeovimFloaTerm()` or `openTmuxFloaTerm()` or `openZellijFloaTerm()` function
+
+</details> <!--}}}-->
+
+<details>
+    <summary> Open a split terminal, using Neovim's built-in terminal </summary> <!--{{{-->
+
+```lua
+require("smart-term").openNeovimSpliTerm {
+    "btop", -- optional command, if not specified, opens the current $SHELL instead
+    -- command = "btop", -- you can also use command="command", instead of using the first item as a command
+    side = "left", --optional, default is below
+    -- accepts these values:
+        -- left, h
+        -- right, l
+        -- above, up, k
+        -- below, down, j
+    closeOnExit = true, -- if true, close the pane when the command exists,
     sizePercent = 30, -- optional, specify a size percentage
+}
+```
+</details> <!--}}}-->
+
+<details>
+    <summary> Open a split terminal, using tmux's display-popup feature </summary> <!--{{{-->
+
+```lua
+require("smart-term").openTmuxSpliTerm {
+    "btop", -- optional command, if not specified, opens the current $SHELL instead
+    -- command = "btop", -- you can also use command="command", instead of using the first item as a command
+    side = "left", --optional, default is below
+    -- accepts these values:
+        -- left, h
+        -- right, l
+        -- above, up, k
+        -- below, down, j
+    closeOnExit = true, -- if true, close the pane when the command exists,
+    sizePercent = 30, -- optional, specify a size percentage
+    stopVim = false, --optional if you want to stop nvim when the pane is running
+}
+```
+</details> <!--}}}-->
+
+<details>
+    <summary> Open a split terminal, using zellij's --floating feature </summary> <!--{{{-->
+
+```lua
+require("smart-term").openZellijSpliTerm {
+    "btop", -- optional command, if not specified, opens the current $SHELL instead
+    -- command = "btop", -- you can also use command="command", instead of using the first item as a command
+    side = "left", --optional, default is below
+    -- accepts these values:
+        -- left, h
+        -- right, l
+        -- above, up, k
+        -- below, down, j
+    closeOnExit = true, -- if true, close the pane when the command exists,
+    stopVim = false, --optional if you want to stop nvim when the pane is running
 }
 ```
 </details> <!--}}}-->
