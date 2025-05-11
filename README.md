@@ -233,3 +233,5 @@ require("smart-term").openZellijSpliTerm {
 </details>
 
 </details> <!--}}}-->
+
+<!-- vim: set textwidth=78: -->
