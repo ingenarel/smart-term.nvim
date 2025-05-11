@@ -100,7 +100,7 @@ require("smart-term").openTmuxFloaTerm{
 </details> <!--}}}-->
 
 <details>
-    <summary> Open a floating terminal, using zellij's display-popup</summary> <!--{{{-->
+    <summary> Open a floating terminal, using zellij's --floating feature </summary> <!--{{{-->
 
 ```lua
 require("smart-term").openZellijFloaTerm{
