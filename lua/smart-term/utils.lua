@@ -7,7 +7,7 @@ function m.commandExtraCommands(command) -- {{{
 
     local commands = {
         lazygit = function()
-            vim.cmd("w")
+            vim.cmd("wa")
             return command
         end,
         default = function()
