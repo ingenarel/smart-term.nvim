@@ -118,6 +118,26 @@ require("smart-term").openZellijFloaTerm{
 </details> <!--}}}-->
 
 <details>
+    <summary> Open a split terminal, depending on your environment </summary> <!--{{{-->
+
+```lua
+require("smart-term").openSpliTerm {
+    "btop", -- optional command, if not specified, opens the current $SHELL instead
+    -- command = "btop", -- you can also use command="command", instead of using the first item as a command
+    side = "left", --optional, default is below
+    -- accepts these values:
+        -- left, h
+        -- right, l
+        -- above, up, k
+        -- below, down, j
+    closeOnExit = true, -- if true, close the pane when the command exists,
+    stopVim = false, --optional if you want to stop nvim when the pane is running
+    sizePercent = 30, -- optional, specify a size percentage
+}
+```
+</details> <!--}}}-->
+
+<details>
     <summary> Images </summary> <!--{{{-->
 
 <details>
