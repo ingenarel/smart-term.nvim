@@ -35,6 +35,7 @@ function m.openNeovimFloaTerm(opts) -- {{{
             if opts.closeOnExit or opts.closeOnExit == nil then
                 vim.cmd("q")
             end
+            utils.commandAfterCommands(opts.command)
         end,
     })
     vim.cmd.startinsert()
@@ -80,8 +81,11 @@ function m.openTmuxFloaTerm(opts) -- {{{
 
     if opts.stopVim then
         vim.system(execute):wait()
+        utils.commandAfterCommands(opts.command)
     else
-        vim.system(execute)
+        vim.system(execute, {}, function()
+            utils.commandAfterCommands(opts.command)
+        end)
     end
 end -- }}}
 
@@ -125,8 +129,11 @@ function m.openZellijFloaTerm(opts) -- {{{
 
     if opts.stopVim then
         vim.system(execute):wait()
+        utils.commandAfterCommands(opts.command)
     else
-        vim.system(execute)
+        vim.system(execute, {}, function()
+            utils.commandAfterCommands(opts.command)
+        end)
     end
 end -- }}}
 
@@ -221,6 +228,7 @@ function m.openNeovimSpliTerm(opts) -- {{{
             if opts.closeOnExit or opts.closeOnExit == nil then
                 vim.cmd("q")
             end
+            utils.commandAfterCommands(opts.command)
         end,
     })
     vim.cmd.startinsert()
@@ -278,8 +286,11 @@ function m.openTmuxSpliTerm(opts) -- {{{
 
     if opts.stopVim then
         vim.system(execute):wait()
+        utils.commandAfterCommands(opts.command)
     else
-        vim.system(execute)
+        vim.system(execute, {}, function()
+            utils.commandAfterCommands(opts.command)
+        end)
     end
 end -- }}}
 
@@ -349,8 +360,11 @@ function m.openZellijSpliTerm(opts) -- {{{
 
     if opts.stopVim then
         vim.system(execute):wait()
+        utils.commandAfterCommands(opts.command)
     else
-        vim.system(execute)
+        vim.system(execute, {}, function()
+            utils.commandAfterCommands(opts.command)
+        end)
     end
 end -- }}}
 

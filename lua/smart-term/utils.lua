@@ -19,6 +19,17 @@ function m.commandExtraCommands(command) -- {{{
     return fn()
 end -- }}}
 
+function m.commandAfterCommands(command)
+    local commands = {
+        lazygit = function()
+            vim.cmd.checktime()
+        end,
+        default = function() end,
+    }
+    local fn = commands[command] or commands.default
+    return fn()
+end
+
 function m.directionSubtitution(table)
     table.up = table.above
     table.k = table.above
