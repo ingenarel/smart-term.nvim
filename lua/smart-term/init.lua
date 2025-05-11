@@ -147,6 +147,8 @@ function m.openFloaTerm(opts) -- {{{
         opts = {}
     end
 
+    opts.command = opts[1] or opts.command
+
     if os.getenv("TMUX") then
         m.openTmuxFloaTerm {
             command = opts.command,
@@ -377,6 +379,8 @@ function m.openSpliTerm(opts) -- {{{
     elseif type(opts) ~= "table" then
         opts = {}
     end
+
+    opts.command = opts[1] or opts.command
 
     if os.getenv("TMUX") then
         m.openTmuxSpliTerm {
