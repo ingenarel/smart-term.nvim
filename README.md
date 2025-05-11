@@ -45,6 +45,9 @@ Using lazy.nvim:
 ## Using:
 
 <details>
+    <summary> Floating panes  </summary> <!--{{{-->
+
+<details>
     <summary> Open a floating terminal, depending on your environment:</summary> <!--{{{-->
 
 ```lua
@@ -116,6 +119,11 @@ require("smart-term").openZellijFloaTerm{
 ```
 
 </details> <!--}}}-->
+
+</details> <!--}}}-->
+
+<details>
+    <summary> Split panes </summary>
 
 <details>
     <summary> Open a split terminal, depending on your environment </summary> <!--{{{-->
@@ -197,6 +205,8 @@ require("smart-term").openZellijSpliTerm {
 }
 ```
 </details> <!--}}}-->
+
+</details>
 
 <details>
     <summary> Images </summary> <!--{{{-->
