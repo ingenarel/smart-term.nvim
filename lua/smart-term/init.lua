@@ -12,9 +12,7 @@ function m.openNeovimFloaTerm(opts) -- {{{
         opts = {}
     end
 
-    if opts.runCommandExtraCommands or opts.runCommandExtraCommands == nil then
-        opts.command = utils.commandExtraCommands(opts.command or opts[1])
-    end
+    opts.command = utils.commandExtraCommands(opts.command or opts[1])
 
     ---@type integer
     local floatingWinWidth = math.floor(vim.o.columns / 100 * (opts.widthPercentage or m.floatWidthPercentage))
@@ -57,9 +55,7 @@ function m.openTmuxFloaTerm(opts) -- {{{
     ---@type integer
     local floatingWinHeight = math.floor(vim.o.lines / 100 * (opts.heightPercentage or m.floatHeightPercentage))
 
-    if opts.runCommandExtraCommands or opts.runCommandExtraCommands == nil then
-        opts.command = utils.commandExtraCommands(opts.command or opts[1])
-    end
+    opts.command = utils.commandExtraCommands(opts.command or opts[1])
 
     local execute = {
         "tmux",
@@ -99,9 +95,7 @@ function m.openZellijFloaTerm(opts) -- {{{
         opts = {}
     end
 
-    if opts.runCommandExtraCommands or opts.runCommandExtraCommands == nil then
-        opts.command = utils.commandExtraCommands(opts.command or opts[1])
-    end
+    opts.command = utils.commandExtraCommands(opts.command or opts[1])
 
     ---@type integer
     local floatingWinWidth = math.floor(vim.o.columns / 100 * (opts.widthPercentage or m.floatWidthPercentage))
@@ -146,8 +140,6 @@ function m.openFloaTerm(opts) -- {{{
         opts = {}
     end
 
-    opts.command = utils.commandExtraCommands(opts.command or opts[1])
-
     if os.getenv("TMUX") then
         m.openTmuxFloaTerm {
             command = opts.command,
@@ -157,7 +149,6 @@ function m.openFloaTerm(opts) -- {{{
             xOffset = opts.xOffset,
             yOffset = opts.yOffset,
             stopVim = opts.stopVim,
-            runCommandExtraCommands = false,
         }
     elseif os.getenv("ZELLIJ") then
         m.openZellijFloaTerm {
@@ -168,7 +159,6 @@ function m.openFloaTerm(opts) -- {{{
             xOffset = opts.xOffset,
             yOffset = opts.yOffset,
             stopVim = opts.stopVim,
-            runCommandExtraCommands = false,
         }
     else
         m.openNeovimFloaTerm {
@@ -178,7 +168,6 @@ function m.openFloaTerm(opts) -- {{{
             xOffset = opts.xOffset,
             yOffset = opts.yOffset,
             closeOnExit = opts.closeOnExit,
-            runCommandExtraCommands = false,
         }
     end
 end -- }}}
@@ -193,9 +182,7 @@ function m.openNeovimSpliTerm(opts) -- {{{
         opts = {}
     end
 
-    if opts.runCommandExtraCommands or opts.runCommandExtraCommands == nil then
-        opts.command = utils.commandExtraCommands(opts.command or opts[1])
-    end
+    opts.command = utils.commandExtraCommands(opts.command or opts[1])
 
     ---@type integer
     local size
@@ -249,9 +236,7 @@ function m.openTmuxSpliTerm(opts) -- {{{
         opts = {}
     end
 
-    if opts.runCommandExtraCommands or opts.runCommandExtraCommands == nil then
-        opts.command = utils.commandExtraCommands(opts.command or opts[1])
-    end
+    opts.command = utils.commandExtraCommands(opts.command or opts[1])
 
     local execute = {
         "tmux",
@@ -308,9 +293,7 @@ function m.openZellijSpliTerm(opts) -- {{{
         opts = {}
     end
 
-    if opts.runCommandExtraCommands or opts.runCommandExtraCommands == nil then
-        opts.command = utils.commandExtraCommands(opts.command or opts[1])
-    end
+    opts.command = utils.commandExtraCommands(opts.command or opts[1])
 
     print(opts.command)
 
@@ -381,8 +364,6 @@ function m.openSpliTerm(opts) -- {{{
         opts = {}
     end
 
-    opts.command = utils.commandExtraCommands(opts.command or opts[1])
-
     if os.getenv("TMUX") then
         m.openTmuxSpliTerm {
             command = opts.command,
@@ -390,7 +371,6 @@ function m.openSpliTerm(opts) -- {{{
             closeOnExit = opts.closeOnExit,
             sizePercent = opts.sizePercent,
             stopVim = opts.stopVim,
-            commandExtraCommands = false,
         }
     elseif os.getenv("ZELLIJ") then
         m.openZellijSpliTerm {
@@ -398,7 +378,6 @@ function m.openSpliTerm(opts) -- {{{
             side = opts.side,
             closeOnExit = opts.closeOnExit,
             stopVim = opts.stopVim,
-            commandExtraCommands = false,
         }
     else
         m.openNeovimSpliTerm {
@@ -406,7 +385,6 @@ function m.openSpliTerm(opts) -- {{{
             side = opts.side,
             size = opts.size,
             closeOnExit = opts.closeOnExit,
-            commandExtraCommands = false,
         }
     end
 end -- }}}
