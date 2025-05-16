@@ -15,7 +15,7 @@ That can use:
 - [ ] wezterm's built-in windows
 <!-- }}} -->
 
-## setup: <!--{{{-->
+## Setup: <!--{{{-->
 
 Using lazy.nvim:
 
