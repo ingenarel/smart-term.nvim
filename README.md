@@ -63,7 +63,8 @@ Using lazy.nvim:
     }
 ```
 
-This function, in turn, calls either `openNeovimFloaTerm()` or `openTmuxFloaTerm()` or `openZellijFloaTerm()` function
+This function, in turn, calls either `openNeovimFloaTerm()` or
+`openTmuxFloaTerm()` or `openZellijFloaTerm()` function
 
 </details> <!--}}}-->
 
