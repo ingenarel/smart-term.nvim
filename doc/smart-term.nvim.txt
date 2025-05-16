@@ -1,0 +1,228 @@
+*smart-term.nvim.txt*			    # A Neovim terminal plugin on crack! 
+
+Open a process or a shell easily as a:
+
+- [x] float
+- [x] splits
+- [ ] new tab
+
+That can use:
+
+- [x] Neovim's default built in windows
+- [x] Zellij's built-in windows
+- [x] Tmux's built-in windows
+- [ ] Kitty's built-in windows
+- [ ] wezterm's built-in windows
+
+
+==============================================================================
+Setup                                                    *smart-term.nvim-setup* 
+
+Using lazy.nvim:
+
+>lua
+    {
+        "ingenarel/smart-term.nvim",
+        config = {
+            floatHeightPercentage = 70, --optional for floating windows height percentage
+            floatWidthPercentage = 80, --optional for floating windows width percentage
+
+            splitHeightPercentage = 33, --optional for split panes height percentage
+            splitWidthPercentage = 33, --optional for split panes width percentage
+
+            floatNeovimXoffset = -2, --optional for floating neovim panes X offset by chars
+            floatNeovimYoffset = -2, --optional for floating neovim panes Y offset by chars
+
+            floatTmuxXoffset = -2, --optional for floating tmux panes X offset by chars
+            floatTmuxYoffset = -2, --optional for floating tmux panes Y offset by chars
+
+            floatZellijXoffset = -2, --optional for floating zellij panes X offset by chars
+            floatZellijYoffset = 2, --optional for floating zellij panes Y offset by chars
+        },
+    }
+<
+
+
+
+
+==============================================================================
+                                                      *smart-term.nvim-floating*
+
+Open a floating terminal, depending on your environment: 
+
+>lua
+    require("smart-term").openFloaTerm{
+        "btop", -- optional command, if not specified, opens the current $SHELL instead
+        -- command = "btop", -- you can also use command="command", instead of using the first item as a command
+        closeOnExit = true, -- if true, close the pane when the command exists,
+        heightPercentage = 70, --optional height percentage
+        widthPercentage = 70, --optional width percentage
+        xOffset = -2, --optional for floating panes X offset by chars
+        yOffset = -2, --optional for floating panes Y offset by chars
+        stopVim = false, --optional if you want to stop nvim when the pane is running (works only for tmux and zellij)
+    }
+<
+
+This function, in turn, calls either `openNeovimFloaTerm()` or
+`openTmuxFloaTerm()` or `openZellijFloaTerm()` function
+
+
+==============================================================================
+*smart-term.nvim-neovim-floating*                *smart-term.nvim-floating-neovim*
+
+Open a floating terminal, using Neovim's built-in terminal: 
+
+>lua
+    require("smart-term").openNeovimFloaTerm {
+        "btop", -- optional command, if not specified, opens the current $SHELL instead
+        -- command = "btop", -- you can also use command="command", instead of using the first item as a command
+        closeOnExit = true, -- if true, close the pane when the command exists, default is true
+        heightPercentage = 70, --optional height percentage, default is 70
+        widthPercentage = 80, --optional width percentage, default is 80
+        xOffset = -2, --optional for floating neovim panes X offset by chars, default is -2
+        yOffset = -2, --optional for floating neovim panes Y offset by chars, default is -2
+    }
+<
+
+
+==============================================================================
+*smart-term.nvim-tmux-floating*                    *smart-term.nvim-floating-tmux*
+
+Open a floating terminal, using tmux's display-popup 
+
+>lua
+    require("smart-term").openTmuxFloaTerm{
+        "btop", -- optional command, if not specified, opens the current $SHELL instead
+        -- command = "btop", -- you can also use command="command", instead of using the first item as a command
+        closeOnExit = true, -- if true, close the pane when the command exists,
+        heightPercentage = 70, --optional height percentage, default is 70
+        widthPercentage = 80, --optional width percentage, default is 80
+        xOffset = -2, --optional for floating tmux panes X offset by chars, default is -2
+        yOffset = -2, --optional for floating tmux panes Y offset by chars, default is -2
+        stopVim = false, --optional if you want to stop nvim when the pane is running
+    }
+<
+
+
+==============================================================================
+*smart-term.nvim-zellij-floating*                *smart-term.nvim-floating-zellij*
+
+Open a floating terminal, using zellij's --floating feature  
+
+>lua
+    require("smart-term").openZellijFloaTerm{
+        "btop", -- optional command, if not specified, opens the current $SHELL instead
+        -- command = "btop", -- you can also use command="command", instead of using the first item as a command
+        closeOnExit = true, -- if true, close the pane when the command exists,
+        heightPercentage = 70, --optional height percentage, default is 70
+        widthPercentage = 80, --optional width percentage, default is 80
+        xOffset = -2, --optional for floating zelij panes X offset by chars, default is -2
+        yOffset = 2, --optional for floating zelij panes Y offset by chars, default is -2
+        stopVim = false, --optional if you want to stop nvim when the pane is running
+    }
+<
+
+
+
+
+==============================================================================
+                                                         *smart-term.nvim-split*
+
+Open a split terminal, depending on your environment  
+
+>lua
+    require("smart-term").openSpliTerm {
+        "btop", -- optional command, if not specified, opens the current $SHELL instead
+        -- command = "btop", -- you can also use command="command", instead of using the first item as a command
+        side = "left", --optional, default is below
+        -- accepts these values:
+            -- left, h
+            -- right, l
+            -- above, up, k
+            -- below, down, j
+        closeOnExit = true, -- if true, close the pane when the command exists,
+        stopVim = false, --optional if you want to stop nvim when the pane is running (only works in tmux and zellij)
+        sizePercent = 30, -- optional, specify a size percentage (only works in neovim and tmux)
+    }
+<
+
+This function, in turn, calls either `openNeovimFloaTerm()` or `openTmuxFloaTerm()` or `openZellijFloaTerm()` function
+
+
+==============================================================================
+*smart-term.nvim-neovim-split*                      *smart-term.nvim-split-neovim*
+
+Open a split terminal, using Neovim's built-in terminal  
+
+>lua
+    require("smart-term").openNeovimSpliTerm {
+        "btop", -- optional command, if not specified, opens the current $SHELL instead
+        -- command = "btop", -- you can also use command="command", instead of using the first item as a command
+        side = "left", --optional, default is below
+        -- accepts these values:
+            -- left, h
+            -- right, l
+            -- above, up, k
+            -- below, down, j
+        closeOnExit = true, -- if true, close the pane when the command exists,
+        sizePercent = 30, -- optional, specify a size percentage
+    }
+<
+
+==============================================================================
+*smart-term.nvim-tmux-split*                          *smart-term.nvim-split-tmux*
+
+Open a split terminal, using tmux's display-popup feature  
+
+>lua
+    require("smart-term").openTmuxSpliTerm {
+        "btop", -- optional command, if not specified, opens the current $SHELL instead
+        -- command = "btop", -- you can also use command="command", instead of using the first item as a command
+        side = "left", --optional, default is below
+        -- accepts these values:
+            -- left, h
+            -- right, l
+            -- above, up, k
+            -- below, down, j
+        closeOnExit = true, -- if true, close the pane when the command exists,
+        sizePercent = 30, -- optional, specify a size percentage
+        stopVim = false, --optional if you want to stop nvim when the pane is running
+    }
+<
+
+==============================================================================
+*smart-term.nvim-zellij-split*                      *smart-term.nvim-split-zellij*
+
+Open a split terminal, using zellij's --floating feature  
+
+>lua
+    require("smart-term").openZellijSpliTerm {
+        "btop", -- optional command, if not specified, opens the current $SHELL instead
+        -- command = "btop", -- you can also use command="command", instead of using the first item as a command
+        side = "left", --optional, default is below
+        -- accepts these values:
+            -- left, h
+            -- right, l
+            -- above, up, k
+            -- below, down, j
+        closeOnExit = true, -- if true, close the pane when the command exists,
+        stopVim = false, --optional if you want to stop nvim when the pane is running
+    }
+<
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+vim:tw=78:ts=8:noet:ft=help:norl:
