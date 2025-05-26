@@ -35,7 +35,10 @@ function m.openNeovimFloaTerm(opts) -- {{{
             if opts.closeOnExit or opts.closeOnExit == nil then
                 vim.cmd("q")
             end
-            utils.commandAfterCommands(opts.command)
+            local afterCommand = utils.commandAfterCommands(opts.command)
+            if type(afterCommand) == "function" then
+                afterCommand()
+            end
         end,
     })
     vim.cmd.startinsert()
@@ -79,13 +82,15 @@ function m.openTmuxFloaTerm(opts) -- {{{
         table.insert(execute, 3, "-E")
     end
 
+    local afterCommand = utils.commandAfterCommands(opts.command)
+    if type(afterCommand) == "function" then
+        opts.stopVim = true
+    end
     if opts.stopVim then
         vim.system(execute):wait()
-        utils.commandAfterCommands(opts.command)
+        afterCommand()
     else
-        vim.system(execute, {}, function()
-            utils.commandAfterCommands(opts.command)
-        end)
+        vim.system(execute)
     end
 end -- }}}
 
@@ -127,13 +132,15 @@ function m.openZellijFloaTerm(opts) -- {{{
     table.insert(execute, "--")
     table.insert(execute, opts.command)
 
+    local afterCommand = utils.commandAfterCommands(opts.command)
+    if type(afterCommand) == "function" then
+        opts.stopVim = true
+    end
     if opts.stopVim then
         vim.system(execute):wait()
-        utils.commandAfterCommands(opts.command)
+        afterCommand()
     else
-        vim.system(execute, {}, function()
-            utils.commandAfterCommands(opts.command)
-        end)
+        vim.system(execute)
     end
 end -- }}}
 
@@ -230,7 +237,10 @@ function m.openNeovimSpliTerm(opts) -- {{{
             if opts.closeOnExit or opts.closeOnExit == nil then
                 vim.cmd("q")
             end
-            utils.commandAfterCommands(opts.command)
+            local afterCommand = utils.commandAfterCommands(opts.command)
+            if type(afterCommand) == "function" then
+                afterCommand()
+            end
         end,
     })
     vim.cmd.startinsert()
@@ -286,13 +296,15 @@ function m.openTmuxSpliTerm(opts) -- {{{
 
     table.insert(execute, opts.command)
 
+    local afterCommand = utils.commandAfterCommands(opts.command)
+    if type(afterCommand) == "function" then
+        opts.stopVim = true
+    end
     if opts.stopVim then
         vim.system(execute):wait()
-        utils.commandAfterCommands(opts.command)
+        afterCommand()
     else
-        vim.system(execute, {}, function()
-            utils.commandAfterCommands(opts.command)
-        end)
+        vim.system(execute)
     end
 end -- }}}
 
@@ -360,13 +372,15 @@ function m.openZellijSpliTerm(opts) -- {{{
 
     sides[(opts.side or "below")]()
 
+    local afterCommand = utils.commandAfterCommands(opts.command)
+    if type(afterCommand) == "function" then
+        opts.stopVim = true
+    end
     if opts.stopVim then
         vim.system(execute):wait()
-        utils.commandAfterCommands(opts.command)
+        afterCommand()
     else
-        vim.system(execute, {}, function()
-            utils.commandAfterCommands(opts.command)
-        end)
+        vim.system(execute)
     end
 end -- }}}
 

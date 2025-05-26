@@ -24,10 +24,8 @@ function m.commandAfterCommands(command)
         lazygit = function()
             vim.cmd.checktime()
         end,
-        default = function() end,
     }
-    local fn = commands[command] or commands.default
-    return fn()
+    return commands[command]
 end
 
 function m.directionSubtitution(table)
