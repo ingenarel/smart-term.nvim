@@ -1,5 +1,7 @@
 local m = {}
 
+local yaziFile = vim.fn.stdpath("cache") .. "/last-yazi-file"
+
 function m.commandExtraCommands(command) -- {{{
     if command == nil then
         return os.getenv("SHELL")
@@ -11,7 +13,7 @@ function m.commandExtraCommands(command) -- {{{
             return command
         end,
         yazi = function()
-            return "yazi --chooser-file " .. vim.fn.stdpath("cache") .. "/last-yazi-file"
+            return "yazi --chooser-file " .. yaziFile
         end,
         default = function()
             return command
@@ -28,8 +30,11 @@ function m.commandAfterCommands(command) -- {{{
             vim.cmd.checktime()
         end,
         yazi = function()
-            for line in io.lines(vim.fn.stdpath("cache") .. "/last-yazi-file") do
-                vim.cmd.e(line)
+            if vim.fn.filereadable(yaziFile) == 1 then
+                for line in io.lines(yaziFile) do
+                    vim.cmd.e(line)
+                end
+                os.remove(yaziFile)
             end
         end,
     }
