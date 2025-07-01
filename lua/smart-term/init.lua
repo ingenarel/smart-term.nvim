@@ -12,7 +12,8 @@ function m.openNeovimFloaTerm(opts) -- {{{
         opts = {}
     end
 
-    opts.command = utils.commandExtraCommands(opts.command or opts[1])
+    opts.command = opts.command or opts[1]
+    local newCommand = utils.commandExtraCommands(opts.command)
 
     ---@type integer
     local floatingWinWidth = math.floor(vim.o.columns / 100 * (opts.widthPercentage or m.floatWidthPercentage))
@@ -29,12 +30,14 @@ function m.openNeovimFloaTerm(opts) -- {{{
         style = "minimal",
     })
 
-    vim.fn.jobstart(opts.command, {
+    print(newCommand)
+    vim.fn.jobstart(newCommand, {
         term = true,
         on_exit = function()
             if opts.closeOnExit or opts.closeOnExit == nil then
                 vim.cmd("q")
             end
+            print(opts.command)
             local afterCommand = utils.commandAfterCommands(opts.command)
             if type(afterCommand) == "function" then
                 afterCommand()
@@ -59,7 +62,8 @@ function m.openTmuxFloaTerm(opts) -- {{{
     ---@type integer
     local floatingWinHeight = math.floor(vim.o.lines / 100 * (opts.heightPercentage or m.floatHeightPercentage))
 
-    opts.command = utils.commandExtraCommands(opts.command or opts[1])
+    opts.command = opts.command or opts[1]
+    local newCommand = utils.commandExtraCommands(opts.command)
 
     local execute = {
         "tmux",
@@ -76,7 +80,7 @@ function m.openTmuxFloaTerm(opts) -- {{{
         vim.fn.getcwd(),
         "-b",
         "rounded",
-        opts.command,
+        newCommand,
     }
     if opts.closeOnExit or opts.closeOnExit == nil then
         table.insert(execute, 3, "-E")
@@ -104,7 +108,8 @@ function m.openZellijFloaTerm(opts) -- {{{
         opts = {}
     end
 
-    opts.command = utils.commandExtraCommands(opts.command or opts[1])
+    opts.command = opts.command or opts[1]
+    local newCommand = utils.commandExtraCommands(opts.command)
 
     ---@type integer
     local floatingWinWidth = math.floor(vim.o.columns / 100 * (opts.widthPercentage or m.floatWidthPercentage))
@@ -130,7 +135,7 @@ function m.openZellijFloaTerm(opts) -- {{{
     end
 
     table.insert(execute, "--")
-    table.insert(execute, opts.command)
+    table.insert(execute, newCommand)
 
     local afterCommand = utils.commandAfterCommands(opts.command)
     if type(afterCommand) == "function" then
@@ -198,7 +203,8 @@ function m.openNeovimSpliTerm(opts) -- {{{
         opts = {}
     end
 
-    opts.command = utils.commandExtraCommands(opts.command or opts[1])
+    opts.command = opts.command or opts[1]
+    local newCommand = utils.commandExtraCommands(opts.command)
 
     ---@type integer
     local size
@@ -231,7 +237,7 @@ function m.openNeovimSpliTerm(opts) -- {{{
 
     vim.cmd.resize(size)
 
-    vim.fn.jobstart(opts.command, {
+    vim.fn.jobstart(newCommand, {
         term = true,
         on_exit = function()
             if opts.closeOnExit or opts.closeOnExit == nil then
@@ -256,7 +262,8 @@ function m.openTmuxSpliTerm(opts) -- {{{
         opts = {}
     end
 
-    opts.command = utils.commandExtraCommands(opts.command or opts[1])
+    opts.command = opts.command or opts[1]
+    local newCommand = utils.commandExtraCommands(opts.command)
 
     local execute = {
         "tmux",
@@ -294,7 +301,7 @@ function m.openTmuxSpliTerm(opts) -- {{{
     table.insert(execute, "-l")
     table.insert(execute, size)
 
-    table.insert(execute, opts.command)
+    table.insert(execute, newCommand)
 
     local afterCommand = utils.commandAfterCommands(opts.command)
     if type(afterCommand) == "function" then
@@ -318,9 +325,8 @@ function m.openZellijSpliTerm(opts) -- {{{
         opts = {}
     end
 
-    opts.command = utils.commandExtraCommands(opts.command or opts[1])
-
-    print(opts.command)
+    opts.command = opts.command or opts[1]
+    local newCommand = utils.commandExtraCommands(opts.command)
 
     local execute = {
         "sh",
@@ -339,7 +345,7 @@ function m.openZellijSpliTerm(opts) -- {{{
             if opts.closeOnExit or opts.closeOnExit == nil then
                 execute[3] = execute[3] .. " --close-on-exit "
             end
-            execute[3] = execute[3] .. " -- " .. opts.command
+            execute[3] = execute[3] .. " -- " .. newCommand
             -- size = math.floor(vim.o.lines / 100 * (opts.sizePercent or m.splitHeightPercentage))
         end,
         right = function()
@@ -347,7 +353,7 @@ function m.openZellijSpliTerm(opts) -- {{{
             if opts.closeOnExit or opts.closeOnExit == nil then
                 execute[3] = execute[3] .. " --close-on-exit "
             end
-            execute[3] = execute[3] .. " -- " .. opts.command
+            execute[3] = execute[3] .. " -- " .. newCommand
             -- size = math.floor(vim.o.columns / 100 * (opts.sizePercent or m.splitWidthPercentage))
         end,
         above = function()
@@ -355,7 +361,7 @@ function m.openZellijSpliTerm(opts) -- {{{
             if opts.closeOnExit or opts.closeOnExit == nil then
                 execute[3] = execute[3] .. " --close-on-exit "
             end
-            execute[3] = execute[3] .. " -- " .. opts.command .. " && zellij action move-pane up"
+            execute[3] = execute[3] .. " -- " .. newCommand .. " && zellij action move-pane up"
             -- size = math.floor(vim.o.lines / 100 * (opts.sizePercent or m.splitHeightPercentage))
         end,
         left = function()
@@ -363,7 +369,7 @@ function m.openZellijSpliTerm(opts) -- {{{
             if opts.closeOnExit or opts.closeOnExit == nil then
                 execute[3] = execute[3] .. " --close-on-exit "
             end
-            execute[3] = execute[3] .. " -- " .. opts.command .. " && zellij action move-pane left"
+            execute[3] = execute[3] .. " -- " .. newCommand .. " && zellij action move-pane left"
             -- size = math.floor(vim.o.columns / 100 * (opts.sizePercent or m.splitWidthPercentage))
         end,
     }
