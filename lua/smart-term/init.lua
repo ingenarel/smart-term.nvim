@@ -30,14 +30,12 @@ function m.openNeovimFloaTerm(opts) -- {{{
         style = "minimal",
     })
 
-    print(newCommand)
     vim.fn.jobstart(newCommand, {
         term = true,
         on_exit = function()
             if opts.closeOnExit or opts.closeOnExit == nil then
                 vim.cmd("q")
             end
-            print(opts.command)
             local afterCommand = utils.commandAfterCommands(opts.command)
             if type(afterCommand) == "function" then
                 afterCommand()
