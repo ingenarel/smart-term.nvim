@@ -78,7 +78,7 @@ function m.openTmuxFloaTerm(opts) -- {{{
         vim.fn.getcwd(),
         "-b",
         "rounded",
-        newCommand,
+        "tmux attach -t 'neovimscratch' || tmux new-session -s 'neovimscratch' '" .. newCommand .. "'",
     }
     if opts.closeOnExit or opts.closeOnExit == nil then
         table.insert(execute, 3, "-E")
