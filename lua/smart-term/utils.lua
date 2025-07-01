@@ -10,6 +10,9 @@ function m.commandExtraCommands(command) -- {{{
             vim.cmd("wa")
             return command
         end,
+        yazi = function()
+            return "yazi --chooser-file " .. vim.fn.stdpath("cache") .. "/last-yazi-file"
+        end,
         default = function()
             return command
         end,
@@ -19,14 +22,19 @@ function m.commandExtraCommands(command) -- {{{
     return fn()
 end -- }}}
 
-function m.commandAfterCommands(command)
+function m.commandAfterCommands(command) -- {{{
     local commands = {
         lazygit = function()
             vim.cmd.checktime()
         end,
+        yazi = function()
+            for line in io.lines(vim.fn.stdpath("cache") .. "/last-yazi-file") do
+                vim.cmd.e(line)
+            end
+        end,
     }
     return commands[command]
-end
+end -- }}}
 
 function m.directionSubtitution(table)
     table.up = table.above
