@@ -133,7 +133,9 @@ function m.openZellijFloaTerm(opts) -- {{{
     end
 
     table.insert(execute, "--")
-    table.insert(execute, newCommand)
+    for command in vim.gsplit(newCommand, " ") do
+        table.insert(execute, command)
+    end
 
     local afterCommand = utils.commandAfterCommands(opts.command)
     if type(afterCommand) == "function" then
