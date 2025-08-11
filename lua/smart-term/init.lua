@@ -78,11 +78,15 @@ function m.openTmuxFloaTerm(opts) -- {{{
         vim.fn.getcwd(),
         "-b",
         "rounded",
-        "tmux attach -t 'neovimscratch' || tmux new-session -s 'neovimscratch' '" .. newCommand .. "'",
+        "tmux attach -t 'neovimscratch' > /dev/null 2>&1 || tmux new-session -s 'neovimscratch' '" .. newCommand,
     }
     if opts.closeOnExit or opts.closeOnExit == nil then
         table.insert(execute, 3, "-E")
+    else
+        execute[#execute] = execute[#execute]
+            .. ' ; printf "\\n\\n\\n"; echo "Process ended with exit code of $?"; echo "Please press enter to continue"; read'
     end
+    execute[#execute] = execute[#execute] .. "'"
 
     local afterCommand = utils.commandAfterCommands(opts.command)
     if type(afterCommand) == "function" then
