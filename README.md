@@ -44,6 +44,10 @@ Using lazy.nvim:
 
 ## Using:
 
+This plugin is in heavy development so the docs could be outdated a bit. You
+should check the [meta file](lua/smart-term/meta.lua) for the most up-to-date
+docs
+
 <details>
     <summary> Floating panes  </summary> <!--{{{-->
 
@@ -51,7 +55,7 @@ Using lazy.nvim:
     <summary> Open a floating terminal, depending on your environment:</summary> <!--{{{-->
 
 ```lua
-    require("smart-term").openFloaTerm{
+    require("smart-term").float{
         "btop", -- optional command, if not specified, opens the current $SHELL instead
         -- command = "btop", -- you can also use command="command", instead of using the first item as a command
         closeOnExit = true, -- if true, close the pane when the command exists,
@@ -63,8 +67,8 @@ Using lazy.nvim:
     }
 ```
 
-This function, in turn, calls either `openNeovimFloaTerm()` or
-`openTmuxFloaTerm()` or `openZellijFloaTerm()` function
+This function, in turn, calls either `nvim.float()` or
+`tmux.float()` or `zellij.float()` function
 
 </details> <!--}}}-->
 
@@ -72,7 +76,7 @@ This function, in turn, calls either `openNeovimFloaTerm()` or
     <summary> Open a floating terminal, using Neovim's built-in terminal:</summary> <!--{{{-->
 
 ```lua
-    require("smart-term").openNeovimFloaTerm {
+    require("smart-term.neovim").float {
         "btop", -- optional command, if not specified, opens the current $SHELL instead
         -- command = "btop", -- you can also use command="command", instead of using the first item as a command
         closeOnExit = true, -- if true, close the pane when the command exists, default is true
@@ -89,7 +93,7 @@ This function, in turn, calls either `openNeovimFloaTerm()` or
     <summary> Open a floating terminal, using tmux's display-popup</summary> <!--{{{-->
 
 ```lua
-    require("smart-term").openTmuxFloaTerm{
+    require("smart-term.tmux").float{
         "btop", -- optional command, if not specified, opens the current $SHELL instead
         -- command = "btop", -- you can also use command="command", instead of using the first item as a command
         closeOnExit = true, -- if true, close the pane when the command exists,
@@ -107,7 +111,7 @@ This function, in turn, calls either `openNeovimFloaTerm()` or
     <summary> Open a floating terminal, using zellij's --floating feature </summary> <!--{{{-->
 
 ```lua
-    require("smart-term").openZellijFloaTerm{
+    require("smart-term.zellij").float{
         "btop", -- optional command, if not specified, opens the current $SHELL instead
         -- command = "btop", -- you can also use command="command", instead of using the first item as a command
         closeOnExit = true, -- if true, close the pane when the command exists,
@@ -130,7 +134,7 @@ This function, in turn, calls either `openNeovimFloaTerm()` or
     <summary> Open a split terminal, depending on your environment </summary> <!--{{{-->
 
 ```lua
-    require("smart-term").openSpliTerm {
+    require("smart-term").split {
         "btop", -- optional command, if not specified, opens the current $SHELL instead
         -- command = "btop", -- you can also use command="command", instead of using the first item as a command
         side = "left", --optional, default is below
@@ -145,7 +149,7 @@ This function, in turn, calls either `openNeovimFloaTerm()` or
     }
 ```
 
-This function, in turn, calls either `openNeovimFloaTerm()` or `openTmuxFloaTerm()` or `openZellijFloaTerm()` function
+This function, in turn, calls either `nvim.split()` or `tmux.split()` or `zellij.split()` function
 
 </details> <!--}}}-->
 
@@ -153,7 +157,7 @@ This function, in turn, calls either `openNeovimFloaTerm()` or `openTmuxFloaTerm
     <summary> Open a split terminal, using Neovim's built-in terminal </summary> <!--{{{-->
 
 ```lua
-    require("smart-term").openNeovimSpliTerm {
+    require("smart-term.neovim").split {
         "btop", -- optional command, if not specified, opens the current $SHELL instead
         -- command = "btop", -- you can also use command="command", instead of using the first item as a command
         side = "left", --optional, default is below
@@ -172,7 +176,7 @@ This function, in turn, calls either `openNeovimFloaTerm()` or `openTmuxFloaTerm
     <summary> Open a split terminal, using tmux's display-popup feature </summary> <!--{{{-->
 
 ```lua
-    require("smart-term").openTmuxSpliTerm {
+    require("smart-term.tmux").split {
         "btop", -- optional command, if not specified, opens the current $SHELL instead
         -- command = "btop", -- you can also use command="command", instead of using the first item as a command
         side = "left", --optional, default is below
@@ -192,7 +196,7 @@ This function, in turn, calls either `openNeovimFloaTerm()` or `openTmuxFloaTerm
     <summary> Open a split terminal, using zellij's --floating feature </summary> <!--{{{-->
 
 ```lua
-    require("smart-term").openZellijSpliTerm {
+    require("smart-term.zellij").split {
         "btop", -- optional command, if not specified, opens the current $SHELL instead
         -- command = "btop", -- you can also use command="command", instead of using the first item as a command
         side = "left", --optional, default is below
