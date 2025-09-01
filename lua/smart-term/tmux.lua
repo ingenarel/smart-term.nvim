@@ -56,6 +56,35 @@ function m.float(opts) -- {{{
         afterCommand()
     else
         vim.system(execute)
+        local auID = {}
+        auID[1] = vim.api.nvim_create_autocmd("VimResized", {
+            callback = function()
+                local clientName = string.gsub(
+                    vim.system({
+                        "/usr/bin/sh",
+                        "-c",
+                        "tmux list-clients -F '#{client_name} #{session_name}' | awk '/neovimscratch/ { print $1 }'",
+                    })
+                        :wait().stdout,
+                    "\n",
+                    ""
+                )
+                if clientName ~= "" then
+                    vim.system({
+                        "tmux",
+                        "detach-client",
+                        "-t",
+                        clientName,
+                    }):wait()
+                    vim.schedule(function()
+                        vim.api.nvim_del_autocmd(auID[1])
+                        m.float(opts)
+                    end)
+                else
+                    vim.api.nvim_del_autocmd(auID[1])
+                end
+            end,
+        })
     end
 end -- }}}
 
