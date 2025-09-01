@@ -22,8 +22,7 @@ function smartTerm.zellij.split(opts) end
 ---@class smartTerm.init
 ---@field shared smartTerm.init.shared
 smartTerm.init = {}
-function smartTerm.init.float(opts) end
-function smartTerm.init.split(opts) end
+function smartTerm.init.open(opts) end
 function smartTerm.init.setup(opts) end
 
 ---@class smartTerm.init.shared

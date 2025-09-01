@@ -4,7 +4,7 @@ local m = {
     shared = {},
 }
 
-function m.float(opts) -- {{{
+function m.open(opts) -- {{{
     if type(opts) == "string" then
         local x = {}
         x[1] = opts
@@ -19,16 +19,19 @@ function m.float(opts) -- {{{
     local functions = {
         tmux = function()
             if os.getenv("TMUX") then
-                return require("smart-term.tmux").float
+                local tmux = require("smart-term.tmux")
+                return { float = tmux.float, split = tmux.split }
             end
         end,
         zellij = function()
             if os.getenv("ZELLIJ") then
-                return require("smart-term.zellij").float
+                local zellij = require("smart-term.zellij")
+                return { float = zellij.float, spit = zellij.split }
             end
         end,
         nvim = function()
-            return require("smart-term.neovim").float
+            local nvim = require("smart-term.neovim")
+            return { float = nvim.float, split = nvim.split }
         end,
     }
 
@@ -36,46 +39,13 @@ function m.float(opts) -- {{{
     for _, choice in ipairs(opts.choices) do
         local func = functions[choice]()
         if func then
-            func(opts)
+            if opts.float then
+                func.float(opts)
+            elseif opts.split then
+                func.split(opts)
+            end
             break
         end
-    end
-end -- }}}
-
-function m.split(opts) -- {{{
-    if type(opts) == "string" then
-        local x = {}
-        x[1] = opts
-        opts = x
-        x = nil
-    elseif type(opts) ~= "table" then
-        opts = {}
-    end
-
-    opts.command = opts[1] or opts.command
-
-    if os.getenv("TMUX") then
-        require("smart-term.tmux").split {
-            command = opts.command,
-            side = opts.side,
-            closeOnExit = opts.closeOnExit,
-            sizePercent = opts.sizePercent,
-            stopVim = opts.stopVim,
-        }
-    elseif os.getenv("ZELLIJ") then
-        require("smart-term.zellij").split {
-            command = opts.command,
-            side = opts.side,
-            closeOnExit = opts.closeOnExit,
-            stopVim = opts.stopVim,
-        }
-    else
-        require("smart-term.neovim").split {
-            command = opts.command,
-            side = opts.side,
-            size = opts.size,
-            closeOnExit = opts.closeOnExit,
-        }
     end
 end -- }}}
 
